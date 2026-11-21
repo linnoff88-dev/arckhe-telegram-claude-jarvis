@@ -1,0 +1,23 @@
+<template>
+  <style>
+    @font-face { font-family: "Sora"; src: url("assets/fonts/Sora.ttf"); font-weight: 100 800; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #000008; font-family: "Sora", sans-serif; }
+    #e-logo { position: absolute; left: 460px; top: 230px; width: 1000px; height: 333px; object-fit: contain; }
+    #e-veu { position: absolute; left: 460px; top: 230px; width: 1000px; height: 333px; background: #000008; transform-origin: 100% 50%; }
+    #e-per { position: absolute; left: 0; width: 1920px; top: 650px; text-align: center; font-size: 62px; font-weight: 700; letter-spacing: -0.02em; color: #e9e9ee; }
+    #e-url { position: absolute; left: 0; width: 1920px; top: 760px; text-align: center; font-size: 46px; font-weight: 600; color: #facc15; }
+  </style>
+  <div id="root" data-composition-id="marca" data-width="1920" data-height="1080">
+    <img id="e-logo" src="assets/marca/logo-inema-club-horizontal.png" alt="INEMA.CLUB" />
+    <div id="e-veu"></div>
+    <p id="e-per">Você daria qual tarefa para o seu Jarvis?</p>
+    <p id="e-url">Grátis no inema.club, direto na internet.</p>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#e-veu", { scaleX: 1 }, { scaleX: 0, duration: 0.46, ease: "power4.inOut" }, 0);
+    tl.fromTo("#e-per", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.24, ease: "power3.out" }, 0.768);
+    tl.fromTo("#e-url", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.24, ease: "power3.out" }, 1.28);
+    window.__timelines["marca"] = tl;
+  </script>
+</template>

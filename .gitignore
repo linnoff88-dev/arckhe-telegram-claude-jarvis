@@ -1,0 +1,7 @@
+ponte-opcao1/sandbox/
+__pycache__/
+node_modules/
+*.mp4
+.quadros-*/
+guia/assets/*.codex.log
+!guia/assets/videos/*.mp4

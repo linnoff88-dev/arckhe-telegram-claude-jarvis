@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CONCEITO · Seu Jarvis no Telegram — mande o servidor trabalhar pelo celular</title>
+<meta name="description" content="Você pede pelo Telegram, a IA trabalha no seu servidor e pergunta antes do que é perigoso. Dois jeitos: o controle remoto do Claude Code e o Jarvis do Intelecto, com memória, regras e trava. Grátis no inema.club.">
+<link rel="alternate" hreflang="pt-BR" href="https://inematds.github.io/telegram-claude-jarvis/guia/">
+<link rel="alternate" hreflang="en" href="https://inematds.github.io/telegram-claude-jarvis/guia/en/">
+<link rel="alternate" hreflang="es" href="https://inematds.github.io/telegram-claude-jarvis/guia/es/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0c10; --bg2:#14141b; --card:#16161e; --line:#272730;
+    --txt:#e9e9ee; --mut:#9a9aa6; --amb:#FACC15; --amb2:#f0c070; --sky:#38bdf8; --pro:#cbd5e1;
+    --fill:#FACC15; --tint:rgba(250,204,21,.12); --ok:#7CE0C6; --bad:#F0918A;
+    color-scheme:dark;
+  }
+  body.light{
+    --bg:#f6f7f9; --bg2:#eceef2; --card:#ffffff; --line:#e1e3ea;
+    --txt:#1a1a22; --mut:#5b5b68; --amb:#a16207; --amb2:#a16207; --sky:#0369a1; --pro:#b45309;
+    --fill:#FACC15; --tint:#FEF9C3; --ok:#0E6B55; --bad:#A83426;
+    color-scheme:light;
+  }
+  body.light .hero .glow{opacity:.5}
+  body.light pre{background:#0e0e14;color:#d6d6e0}
+  body.light pre .c{color:#8a8a98}
+  body.light pre .k{color:#f0c070}
+  body.light nav{background:rgba(246,247,249,.85)}
+  body.light .amb{color:var(--txt);background:linear-gradient(transparent 55%,#FACC15 55%)}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:Sora,sans-serif;line-height:1.15;margin:0}
+  a{color:var(--amb);text-decoration:none}
+  body.light main a:not(.btn),body.light footer a{color:#854d0e;text-decoration:underline;text-decoration-color:#FACC15;text-decoration-thickness:3px}
+  code,pre{font-family:"JetBrains Mono",monospace}
+  p code,li code,td code{font-size:.9em;background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:.05em .35em}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+  .mut{color:var(--mut)} .amb{color:var(--amb)}
+  .chip{display:inline-block;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amb);font-weight:600;font-family:Sora}
+  nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(12px);background:rgba(12,12,16,.78);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;gap:22px;height:60px}
+  nav .brand{display:flex;align-items:center;gap:8px;font-family:Sora;font-weight:800;letter-spacing:-.02em;color:var(--amb);white-space:nowrap}
+  nav .brand .emoji{font-size:1.25rem}
+  nav .sep{color:var(--mut);opacity:.45}
+  nav .inema{color:var(--sky);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .inema:hover{filter:brightness(1.15)}
+  nav .pro{color:var(--pro);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .pro:hover{filter:brightness(1.15)}
+  nav .clubpro{display:inline-flex;align-items:center;gap:6px}
+  nav .links{margin-left:auto;display:flex;align-items:center;gap:20px;font-size:.92rem}
+  nav .links a.sec{color:var(--mut)} nav .links a.sec:hover{color:var(--txt)}
+  .lang{display:inline-flex;gap:2px;font-family:Sora;font-size:.78rem}
+  .lang a{color:var(--mut);padding:.2em .45em;border-radius:6px} .lang a.on{color:var(--amb);background:var(--tint)}
+  .tgl{background:var(--bg2);border:1px solid var(--line);color:var(--txt);width:38px;height:38px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem}
+  .tgl:hover{border-color:var(--amb)}
+  .btn{display:inline-block;background:var(--fill);color:#1a1206;font-weight:600;padding:.6em 1.05em;border-radius:10px;font-family:Sora}
+  .btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  nav .links a.sec{white-space:nowrap}
+  @media(max-width:1360px){nav .links a.opt{display:none}}
+  @media(max-width:860px){nav .links a.sec{display:none}}
+  @media(max-width:520px){nav .wrap{gap:8px;padding:8px 14px;height:auto;flex-wrap:wrap} nav .links{gap:8px;margin-left:0;width:100%;justify-content:space-between} nav .btn{padding:.45em .7em;font-size:.82rem} .tgl{width:34px;height:34px}}
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero .glow{position:absolute;inset:-40% -20% auto auto;width:70%;height:600px;background:radial-gradient(closest-side,rgba(250,204,21,.18),transparent 70%);pointer-events:none}
+  .hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding:74px 22px}
+  .hero h1{font-size:clamp(2.1rem,4.6vw,3.3rem);font-weight:800;letter-spacing:-.025em}
+  .hero p.lead{font-size:1.15rem;color:var(--mut);margin:1.1em 0 1.6em;max-width:44ch}
+  .hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+  .hero figure{margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000}
+  .hero figure img{width:100%;height:auto;display:block}
+  .resumo{padding:38px 0 34px;border-bottom:1px solid var(--line)}
+  .resumo p{font-size:1.12rem;line-height:1.7;max-width:74ch;margin:.55em 0 0}
+  @media(max-width:780px){.hero .wrap{grid-template-columns:1fr;padding:48px 22px}}
+  section{padding:62px 0;border-bottom:1px solid var(--line)}
+  section h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800;letter-spacing:-.02em}
+  section .sub{color:var(--mut);margin:.6em 0 2em;max-width:66ch}
+  .grid{display:grid;gap:16px}
+  .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:820px){.g3,.g4{grid-template-columns:1fr 1fr}}
+  @media(max-width:540px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .vid video{width:100%;aspect-ratio:16/9;border-radius:10px;background:#000;display:block;margin-bottom:10px}
+  .tab-wrap{overflow-x:auto;margin-top:14px;border:1px solid var(--line);border-radius:12px}
+  .tab-fmt{width:100%;border-collapse:collapse;font-size:14px;min-width:720px}
+  .tab-fmt th,.tab-fmt td{padding:10px 12px;border-top:1px solid var(--line);text-align:left;vertical-align:top}
+  .tab-fmt thead th{border-top:0;color:var(--amb, #FACC15);font-size:13px;letter-spacing:.02em}
+  .tab-fmt td:first-child{font-weight:700;white-space:nowrap}
+  .tab-nota{font-size:14px;margin:10px 0 0}
+  .bloco-vid{margin-top:26px} .bloco-vid h3.tit{margin:0 0 12px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}
+  .card h3{font-size:1.05rem;margin-bottom:.4em}
+  .card p{color:var(--mut);font-size:.95rem;margin:0}
+  .card p+p{margin-top:.6em}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+  .flow span{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:.45em .9em;font-size:.85rem;font-family:Sora;font-weight:600}
+  .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
+  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.86rem;line-height:1.6;color:#d6d6e0;margin:.4em 0 0}
+  pre .c{color:#7d7d8a} pre .k{color:var(--amb2)} pre .s{color:#9ece6a}
+  .step{display:grid;grid-template-columns:46px minmax(0,1fr);gap:16px;margin-bottom:28px}
+  .step>div{min-width:0}
+  .step .b{width:46px;height:46px;border-radius:12px;background:var(--fill);color:#1a1206;font-family:Sora;font-weight:800;font-size:1.25rem;display:flex;align-items:center;justify-content:center}
+  .step h3{font-size:1.12rem;margin-bottom:.3em}
+  .step p{color:var(--mut);margin:.2em 0 .5em}
+  .quem{display:inline-block;font-family:Sora;font-size:.75rem;letter-spacing:.06em;color:var(--txt);background:var(--tint);border:1px solid var(--line);border-radius:999px;padding:.1em .7em;margin-left:.5em;vertical-align:middle;font-weight:600}
+  footer{padding:46px 0;text-align:center;color:var(--mut);font-size:.9rem}
+  .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.3em .8em;font-size:.78rem;color:var(--mut);margin:4px}
+  /* números */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
+  @media(max-width:720px){.stats{grid-template-columns:1fr}}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .stat b{display:block;font:800 clamp(1.9rem,4vw,2.6rem)/1.05 Sora,sans-serif;letter-spacing:-.02em;color:var(--amb)}
+  body.light .stat b{color:var(--txt)}
+  .stat span{display:block;color:var(--mut);font-size:.93rem;margin-top:.5em}
+  .fonte{font-size:.86rem;color:var(--mut);margin-top:14px;max-width:80ch}
+  /* trocas */
+  .troca{display:grid;grid-template-columns:64px minmax(0,1fr);gap:18px;padding:26px 0;border-top:1px solid var(--line)}
+  .troca:first-of-type{border-top:none}
+  .troca .n{width:64px;height:64px;border-radius:14px;border:1px solid var(--line);background:var(--card);display:flex;align-items:center;justify-content:center;font:800 1.6rem Sora,sans-serif;color:var(--amb)}
+  body.light .troca .n{color:var(--txt);background:var(--fill);border-color:var(--fill)}
+  .troca h3{font-size:1.3rem;margin-bottom:.35em}
+  .troca p{margin:.35em 0;max-width:72ch}
+  .troca .ex{margin-top:.8em;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--fill);border-radius:10px;padding:12px 16px;font-size:.95rem;color:var(--mut);max-width:76ch}
+  .troca .ex b{color:var(--txt)}
+  @media(max-width:540px){.troca{grid-template-columns:1fr}}
+  /* três finais */
+  .vs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px;max-width:900px}
+  @media(max-width:720px){.vs{grid-template-columns:1fr}}
+  .vs div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:.93rem}
+  .vs strong{display:block;font-family:Sora;margin-bottom:.25em}
+  .vs .r{display:block;margin-top:.5em;font-weight:600}
+  .vs .r.bad{color:var(--bad)} .vs .r.ok{color:var(--ok)}
+  .card ul{margin:8px 0 0;padding-left:20px}.card li{margin:5px 0}
+  /* prova */
+  .prova{background:var(--card);border:1px solid var(--amb);border-radius:16px;padding:26px 26px 22px;margin-top:6px}
+  body.light .prova{border-color:#EAB308}
+  .tl{list-style:none;margin:0;padding:0;counter-reset:t}
+  .tl li{position:relative;padding:0 0 18px 48px;counter-increment:t}
+  .tl li::before{content:counter(t);position:absolute;left:0;top:0;width:32px;height:32px;border-radius:10px;background:var(--fill);color:#1a1206;font:800 .95rem/32px Sora,sans-serif;text-align:center}
+  .tl li::after{content:"";position:absolute;left:15px;top:36px;bottom:4px;width:2px;background:var(--line)}
+  .tl li:last-child::after{display:none}
+  .tl b{font-family:Sora}
+  blockquote{margin:6px 0 0;padding:14px 18px;border-left:3px solid var(--fill);background:var(--bg2);border-radius:0 10px 10px 0;font-size:1.02rem}
+  .prova .rod{font-size:.86rem;color:var(--mut);margin-top:14px}
+  /* parte técnica */
+  .techhead{background:var(--bg2);border-top:3px solid var(--fill);padding:58px 0 8px}
+  .techhead h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800;letter-spacing:-.02em;margin:.3em 0 0}
+  .techhead .sub{color:var(--mut);margin:.6em 0 1.2em;max-width:66ch}
+  .techzone{background:var(--bg2)}
+  .techzone .card{background:var(--card)}
+  .tbl{width:100%;border-collapse:collapse;font-size:.93rem}
+  .tbl th,.tbl td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  .tbl th{font-family:Sora;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+  .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+  @media(max-width:600px){.tbl thead{display:none} .tbl tr{display:block;border-bottom:1px solid var(--line);padding:6px 0} .tbl tr:last-child{border-bottom:none} .tbl td{display:block;border:none;padding:4px 14px}}
+
+  .duas{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:760px){.duas{grid-template-columns:1fr}}
+  .op{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
+  .op.dois{border-color:var(--amb)}
+  .op h3{font-size:1.25rem;margin:.3em 0 .4em}
+  .op p{color:var(--mut);margin:.35em 0}
+  .op .quando{margin-top:.8em;font-size:.92rem}
+  .peca{margin:18px 0 0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+  .peca img{width:100%;display:block}
+  .peca figcaption{padding:12px 14px;font-size:.9rem;color:var(--mut);background:var(--card)}
+  .num{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:8px;background:rgba(250,204,21,.14);color:var(--amb);font-family:Sora;font-weight:800;font-size:.9rem;margin-bottom:.7em}
+  .videos{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:10px}
+  @media(max-width:820px){.videos{grid-template-columns:1fr}}
+  .videos .card h3{font-size:1rem}
+  .conceito{color:var(--sky);font-weight:700}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="#top"><span class="emoji">📲</span> Seu Jarvis no Telegram · <span class="conceito">CONCEITO</span></a>
+  <span class="sep">|</span>
+  <span class="clubpro">
+    <a class="inema" href="https://inema.club" target="_blank" rel="noopener">INEMA.CLUB</a>
+    <span class="sep">-</span>
+    <a class="pro" href="https://inema.pro" target="_blank" rel="noopener">PRO</a>
+  </span>
+  <div class="links">
+    <a class="sec" href="#explicado">O ganho</a>
+    <a class="sec" href="#dia">No seu dia</a>
+    <a class="sec" href="#como">Como funciona</a>
+    <a class="sec" href="#comecar">Como começar</a>
+    <a class="sec" href="#prova">A prova</a>
+    <span class="lang"><a class="on" href="./">PT</a><a href="en/">EN</a><a href="es/">ES</a></span>
+    <button class="tgl" id="themeToggle" aria-label="Alternar tema" title="Alternar tema">🌙</button>
+    <a class="btn" href="https://github.com/inematds/telegram-claude-jarvis" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</div></nav>
+
+<header class="hero" id="top">
+  <div class="glow"></div>
+  <div class="wrap">
+    <div>
+      <span class="chip"><span class="conceito">CONCEITO</span> · Telegram · Claude Code · Intelecto</span>
+      <h1><span class="amb">Seu Jarvis no Telegram</span>: peça pelo celular, a IA faz no seu computador.</h1>
+      <p class="lead">Você lembra de uma tarefa longe do computador. Escreve no Telegram, como falaria com uma pessoa, e a IA faz o trabalho no seu computador e responde no mesmo chat. Antes de apagar, mudar ou enviar algo para fora, ela pergunta: confirma?</p>
+      <p class="mut" style="margin:-.6em 0 1.4em;font-size:.95rem">O Jarvis do Intelecto já conversa pelo Telegram de verdade. No controle remoto do Claude Code, a IA monta o bot do Telegram com você.</p>
+      <div class="cta">
+        <a class="btn" href="#explicado">O que você ganha</a>
+        <a class="btn ghost" href="#comecar">Como começar</a>
+      </div>
+    </div>
+    <figure><img src="assets/banner.jpg" alt="Seu Jarvis no Telegram: do controle remoto do Claude Code ao assistente com 8 peças"></figure>
+  </div>
+</header>
+
+<section id="resumo" class="resumo"><div class="wrap">
+  <span class="chip">Em resumo</span>
+  <p>Aqui você vê dois jeitos de conversar pelo Telegram com uma IA que trabalha no seu computador (pode ser um servidor: um computador que fica ligado o tempo todo, em casa ou alugado). O primeiro é o <strong>controle remoto do Claude Code</strong> (o Claude Code é o assistente da Anthropic que trabalha dentro do computador, pela assinatura do Claude): um bot confere se é você e repassa o pedido ao Claude Code, que responde ou executa. O segundo é o <strong>Jarvis do Intelecto</strong>: um assistente com identidade, memória, regras e trava, que usa a IA como cérebro e pode trocar de cérebro. Serve para quem quer mandar tarefas pelo celular sem abrir o computador. O projeto traz as demonstrações reais, as peças animadas e os vídeos.</p>
+  <figure style="margin:22px 0 0;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000"><img src="assets/banner-grade.jpg" alt="Seu Jarvis no Telegram: controle remoto, pede antes de apagar, lembra de você, trava e caixa, demonstração real, como começar" loading="lazy" style="width:100%;display:block"></figure>
+</div></section>
+
+<section id="explicado"><div class="wrap">
+  <span class="chip">O ganho</span>
+  <h2>O trabalho acontece no computador. <span class="amb">Você só precisa do chat.</span></h2>
+  <p class="sub">Hoje, para pedir qualquer coisa à IA que trabalha no seu computador, você precisa estar sentado na frente dele.</p>
+  <div class="grid g2">
+    <div class="card"><h3>😩 Antes</h3><p>Você lembra de algo na rua ("quanto espaço sobrou no disco?"), mas só consegue ver quando chegar em casa e abrir o computador. E se pedir algo que apaga arquivos, tudo depende de a IA lembrar de perguntar antes.</p></div>
+    <div class="card"><h3>😌 Depois</h3><p>Com o bot do Telegram montado, você manda a pergunta e a resposta chega no mesmo chat em segundos. Se o pedido apaga, muda ou envia algo para fora, a IA mostra o que vai fazer e espera o seu "sim".</p></div>
+  </div>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card"><div class="num">1</div><h3>Do celular, de qualquer lugar</h3><p>O Telegram vira a porta de entrada e de saída. Nada de sentar na frente do computador.</p></div>
+    <div class="card"><div class="num">2</div><h3>Só você manda</h3><p>O bot confere quem escreveu. Mensagem de outra pessoa recebe "acesso negado" e não chega na IA.</p></div>
+    <div class="card"><div class="num">3</div><h3>Nada perigoso sem o seu OK</h3><p>Ler e consultar, ela faz direto. Apagar, mudar ou enviar, ela pergunta antes. No Jarvis, isso é uma trava no código. No controle remoto, é uma regra que a IA recebe (e seguiu no teste).</p></div>
+  </div>
+</div></section>
+
+<section id="duas"><div class="wrap">
+  <span class="chip">Os dois jeitos</span>
+  <h2>Comece pelo <span class="amb">controle remoto</span>. Cresça para o <span class="amb">Jarvis</span>.</h2>
+  <p class="sub">Os dois usam o Telegram. A diferença é quem pensa e quem segura as regras.</p>
+  <div class="duas">
+    <div class="op"><span class="chip">Opção 1</span><h3>📲 Controle remoto do Claude Code</h3>
+      <p>O bot é só a ponte: recebe a mensagem, confere se é você e entrega ao Claude Code. O Claude Code pensa, executa no servidor e responde.</p>
+      <p class="quando"><strong>Quando usar:</strong> para começar rápido, com o Claude Code que você já usa.</p><p class="quando"><strong>Atenção:</strong> a demonstração desta opção roda numa tela parecida com o Telegram, no computador. O bot de verdade (criado no próprio Telegram) a IA monta com você no "Como começar".</p></div>
+    <div class="op dois"><span class="chip">Opção 2</span><h3>🤖 O Jarvis do Intelecto</h3>
+      <p>Entre o Telegram e a IA entra um assistente com 8 peças: identidade, memória, ferramentas, trava, caixa e mais. A IA vira o cérebro, e o cérebro pode ser trocado.</p>
+      <p class="quando"><strong>Quando usar:</strong> para ter um assistente pessoal que lembra de você e segue as suas regras. O Intelecto é gratuito, do INEMA, e qualquer um pode usar e ver como é feito. Ele já vem com o canal do Telegram.</p></div>
+  </div>
+</div></section>
+
+<section id="dia"><div class="wrap">
+  <span class="chip">No seu dia</span>
+  <h2>Como isso muda <span class="amb">o seu dia</span></h2>
+  <p class="sub">Três situações comuns, antes e depois.</p>
+  <div class="grid g3">
+    <div class="card"><h3>📦 "Quantos pedidos entraram hoje?"</h3><p><strong>Hoje:</strong> espera chegar em casa e abrir a planilha.</p><p><strong>Com o Telegram:</strong> pergunta da fila do mercado. A IA lê o arquivo no computador e responde no chat.</p></div>
+    <div class="card"><h3>🧹 "Apaga os arquivos velhos da pasta"</h3><p><strong>Hoje:</strong> ou você faz sozinho, ou torce para a IA não apagar o que não devia.</p><p><strong>Com o Telegram:</strong> ela acha os arquivos, diz quantos são e quanto ocupam e pergunta "confirma?". Só apaga depois do seu sim.</p></div>
+    <div class="card"><h3>🧠 "Qual é mesmo o fornecedor das caixas?"</h3><p><strong>Hoje:</strong> você procura em anotações espalhadas.</p><p><strong>Com o Jarvis:</strong> você disse uma vez "lembre que as caixas vêm da Embalagens Sul". Depois é só perguntar.</p></div>
+  </div>
+</div></section>
+
+<section id="video"><div class="wrap">
+  <span class="chip">Vídeos</span>
+  <h2>Vídeos com <span class="amb">o Nei explicando</span></h2>
+  <p class="sub">São duas coisas diferentes, cada uma com seus três vídeos curtos: a animação das peças, um filme curto e a demonstração real.</p>
+  <!-- VIDEO: arquivos em guia/assets/videos (1a-3a = controle remoto, 1b-3b = Jarvis); trocar por embed do YouTube quando publicados -->
+  <p class="mut tab-nota">Os três vídeos de cada opção vão contar o mesmo roteiro, cada um do seu jeito: primeiro as peças, depois o fluxo e, por fim, o uso. As versões completas, com até 2 min e meio, estão em produção; as curtas acima já mostram cada formato.</p>
+  <div class="bloco-vid"><h3 class="tit">📲 Opção 1 · Controle remoto do Claude Code</h3>
+  <div class="grid g3">
+    <div class="card vid"><video controls preload="none" playsinline poster="assets/videos/1a.jpg" src="assets/videos/1a.mp4"></video><h3>As peças</h3><p class="mut">Telegram, bot, Claude Code e o seu "sim" antes de mudar algo.</p></div>
+    <div class="card vid"><video controls preload="none" playsinline poster="assets/videos/2a.jpg" src="assets/videos/2a.mp4"></video><h3>O caminho da mensagem</h3><p class="mut">Do celular até o servidor e a resposta voltando ao chat.</p></div>
+    <div class="card vid"><video controls preload="none" playsinline poster="assets/videos/3a.jpg" src="assets/videos/3a.mp4"></video><h3>Na prática</h3><p class="mut">Pedidos reais: consulta ao disco e apagar arquivos só com aprovação.</p></div>
+  </div>
+  <h3 class="tit" style="margin-top:22px">Como cada formato conta a mesma história</h3>
+  <div class="tab-wrap"><table class="tab-fmt"><thead><tr><th>Trecho</th><th>Roteiro-base (igual nos 3)</th><th>Animação das peças</th><th>Filme curto</th><th>Demonstração real</th></tr></thead><tbody><tr><td>Gancho</td><td>Você longe do computador, e ele trabalhando para você sem mudar nada sem o seu sim</td><td>Capa com a manchete</td><td>Você na rua, a casa ao fundo</td><td>Celular na mão, Telegram aberto</td></tr><tr><td>As peças</td><td>Telegram (portaria), bot (porteiro que confere se é você), Claude Code (quem entende e decide), terminal (sala de máquinas)</td><td>Cada peça acende no diagrama</td><td>Cada peça entra em cena como alguém do prédio</td><td>A tela real de cada parte</td></tr><tr><td>O fluxo</td><td>Ida e volta da mensagem: o bot confere quem mandou, a primeira passada só lê, mudar espera o seu sim</td><td>Setas correndo pelo diagrama, trava em destaque</td><td>O recado viajando até o servidor e voltando ao chat</td><td>O registro da ponte ao vivo</td></tr><tr><td>O uso</td><td>Perguntar o espaço do disco; apagar logs velhos só depois do "confirma?"; estranho nem chega ao Claude Code</td><td>Os três casos no diagrama</td><td>Os três casos encenados</td><td>A conversa real no Telegram</td></tr><tr><td>Fecho</td><td>Pergunta para você + grátis no inema.club</td><td>Cartão final</td><td>Cartão final</td><td>Cartão final</td></tr></tbody></table></div>
+  </div>
+  <div class="bloco-vid"><h3 class="tit">🤖 Opção 2 · O Jarvis do Intelecto</h3>
+  <div class="grid g3">
+    <div class="card vid"><video controls preload="none" playsinline poster="assets/videos/1b.jpg" src="assets/videos/1b.mp4"></video><h3>As 8 peças</h3><p class="mut">Identidade, memória, ferramentas, trava, caixa e o cérebro que pode ser trocado.</p></div>
+    <div class="card vid"><video controls preload="none" playsinline poster="assets/videos/2b.jpg" src="assets/videos/2b.mp4"></video><h3>Por dentro do Jarvis</h3><p class="mut">O que cada peça faz quando chega um pedido.</p></div>
+    <div class="card vid"><video controls preload="none" playsinline poster="assets/videos/3b.jpg" src="assets/videos/3b.mp4"></video><h3>Na prática</h3><p class="mut">O Jarvis lembrando, consultando, pedindo aprovação e recusando o que é perigoso.</p></div>
+  </div>
+  <h3 class="tit" style="margin-top:22px">Como cada formato conta a mesma história</h3>
+  <div class="tab-wrap"><table class="tab-fmt"><thead><tr><th>Trecho</th><th>Roteiro-base (igual nos 3)</th><th>Animação das peças</th><th>Filme curto</th><th>Demonstração real</th></tr></thead><tbody><tr><td>Gancho</td><td>Um assistente que lembra de você, segue as suas regras e nunca faz besteira sozinho</td><td>Capa com a manchete</td><td>O Jarvis montado, com as peças apagadas</td><td>Telegram aberto na conversa com o Jarvis</td></tr><tr><td>As peças</td><td>Canal, loop com freio, identidade, cérebro trocável, memória, ferramentas, trava e cofre, caixa</td><td>Cada peça acende no diagrama</td><td>Cada peça entra em cena (interfone, crachá, motor, caderno, mãos, segurança, sala fechada)</td><td>O arquivo ou a tela real de cada peça no Intelecto</td></tr><tr><td>O fluxo</td><td>O canal confere quem é; identidade e memória entram junto; o cérebro escolhe a ferramenta; a trava decide: leitura passa, mudar pede OK, destrutivo é recusado</td><td>O pedido percorrendo as 8 peças</td><td>O pedido viajando por dentro do Jarvis</td><td>O painel e o registro ao vivo</td></tr><tr><td>O uso</td><td>Guardar e lembrar o fornecedor; consultar o disco; apagar rascunhos com o seu OK; reiniciar o servidor é recusado</td><td>Os quatro casos no diagrama</td><td>Os quatro casos encenados</td><td>A conversa real, com o Claude Code como cérebro</td></tr><tr><td>Fecho</td><td>Pergunta para você + grátis no inema.club</td><td>Cartão final</td><td>Cartão final</td><td>Cartão final</td></tr></tbody></table></div>
+  </div>
+</div></section>
+
+<section id="como"><div class="wrap">
+  <span class="chip">Como funciona, sem jargão</span>
+  <h2>Opção 1: <span class="amb">quatro peças</span>, como um recado entregue em mãos</h2>
+  <p class="sub">Pense num recado que você deixa na portaria de um prédio.</p>
+  <div class="grid g4">
+    <div class="card"><div class="num">1</div><h3>Telegram</h3><p>A portaria: é onde você deixa o recado e onde a resposta volta.</p></div>
+    <div class="card"><div class="num">2</div><h3>Bot</h3><p>O porteiro: confere se é você antes de subir o recado.</p></div>
+    <div class="card"><div class="num">3</div><h3>Claude Code</h3><p>O funcionário que entende o pedido e decide o que fazer.</p></div>
+    <div class="card"><div class="num">4</div><h3>Terminal</h3><p>A sala de máquinas: a linha de comando, onde o computador executa as ordens.</p></div>
+  </div>
+  <figure class="peca"><a href="../pecas/opcao1-telegram.html" target="_blank" rel="noopener"><img src="assets/peca-opcao1.jpg" alt="Peça animada da Opção 1: celular com o Telegram e o caminho Telegram, bot, Claude Code e terminal" loading="lazy"></a><figcaption>Clique para abrir a peça animada: os 3 casos (pergunta, execução e aprovação) passando pelas 4 peças.</figcaption></figure>
+
+  <h2 style="margin-top:46px">Opção 2: o Jarvis tem <span class="amb">8 peças</span>, cada uma com um motivo</h2>
+  <p class="sub">O cérebro pensa. As outras sete garantem que ele trabalhe para você, do seu jeito e com segurança.</p>
+  <div class="grid g4">
+    <div class="card"><div class="num">1</div><h3>Canal</h3><p>O interfone com lista de moradores: só responde a quem está na lista.</p></div>
+    <div class="card"><div class="num">2</div><h3>Loop com freio</h3><p>Um limite de tentativas: no máximo 5 rodadas, para nunca ficar girando sem parar.</p></div>
+    <div class="card"><div class="num">3</div><h3>Identidade</h3><p>O crachá e o manual: quem ele é, como trabalha e quem é você, em textos que você edita.</p></div>
+    <div class="card"><div class="num">4</div><h3>Cérebro</h3><p>O motor do carro: a IA que pensa. Pode rodar no seu computador, na nuvem ou ser um de teste. Trocar o motor não muda o resto.</p></div>
+    <div class="card"><div class="num">5</div><h3>Memória</h3><p>O caderno: guarda o que você pede e acha depois, até sem acento.</p></div>
+    <div class="card"><div class="num">6</div><h3>Ferramentas</h3><p>As mãos: ler e gravar arquivos na pasta de trabalho e rodar comandos.</p></div>
+    <div class="card"><div class="num">7</div><h3>Trava e cofre</h3><p>O segurança na porta: ler passa, mudar pede o seu OK, destruir nunca. Senhas guardadas num cofre com cadeado e tudo anotado num caderno de registro (a auditoria).</p></div>
+    <div class="card"><div class="num">8</div><h3>Caixa</h3><p>Uma sala fechada sem internet (um contêiner do Docker): se algo der errado, o estrago fica lá dentro.</p></div>
+  </div>
+  <figure class="peca"><a href="../pecas/opcao2-jarvis.html" target="_blank" rel="noopener"><img src="assets/peca-opcao2.jpg" alt="Peça animada da Opção 2: as 8 peças do Jarvis com a ficha de por quê e como de cada uma" loading="lazy"></a><figcaption>Clique para abrir a peça animada: escolha uma peça e veja por que ela existe e como funciona. Os nomes em letra miúda são os arquivos do Intelecto, para quem quiser conferir; não precisa entendê-los.</figcaption></figure>
+  <div class="card" style="margin-top:16px"><h3>⚠️ O que este projeto não promete</h3><p>A Opção 1 aqui roda numa tela no estilo do Telegram, no computador. Para usar o Telegram de verdade, falta criar o bot (o Telegram dá uma senha para ele, o "token") e dizer a ele o seu número de usuário do Telegram, para só você mandar. O pedido abaixo faz a IA montar isso com você. O Intelecto (Opção 2) já tem o canal do Telegram pronto.</p></div>
+</div></section>
+
+<section id="comecar"><div class="wrap">
+  <span class="chip">Como começar</span>
+  <h2>Você não instala nada à mão. <span class="amb">A IA monta com você.</span></h2>
+  <p class="sub">Três passos.</p>
+  <div class="grid g3">
+    <div class="card"><div class="num">1</div><h3>Abra o Claude Code ou o Codex</h3><p>São assistentes de IA que trabalham dentro do computador (o Claude Code vem com a assinatura do Claude; o Codex, com a do ChatGPT). Abra no computador onde a IA vai trabalhar.</p></div>
+    <div class="card"><div class="num">2</div><h3>Cole o pedido abaixo</h3><p>Ele manda a IA ler este projeto e olhar o seu ambiente.</p></div>
+    <div class="card"><div class="num">3</div><h3>Diga sim ao que fizer sentido</h3><p>Ela explica o plano em português simples e só muda algo depois do seu sim.</p></div>
+  </div>
+  <div class="card" style="margin-top:16px"><h3>🧰 O que você precisa ter</h3><ul><li>Um computador ligado o tempo todo (o seu, ou um servidor alugado).</li><li>A assinatura do Claude (para o Claude Code) ou do ChatGPT (para o Codex).</li><li>Uma conta no Telegram, no celular. O seu número de usuário do Telegram a IA mostra como achar.</li><li>Para o Jarvis: a IA instala o Intelecto e o Docker com você.</li></ul></div>
+  <div class="pedido" style="margin-top:20px;position:relative">
+<pre id="pedidoTxt" style="white-space:pre-wrap">Leia o projeto "Seu Jarvis no Telegram" em https://github.com/inematds/telegram-claude-jarvis (o README explica tudo, inclusive a instalação).
+Quero conversar pelo Telegram com uma IA que trabalha neste computador.
+Me responda em português simples:
+1. Qual das duas opções faz sentido para mim agora: o controle remoto do Claude Code ou o Jarvis do Intelecto? Por quê?
+2. O que eu preciso ter (bot do Telegram, meu número de usuário, onde fica a IA) e onde guardar o token com segurança.
+3. Quais pedidos vão rodar direto e quais vão me pedir confirmação antes.
+Não instale nem mude nada ainda. Mostre o plano e espere eu dizer sim.</pre>
+    <button class="btn" id="copiarPedido" style="margin-top:10px">Copiar o pedido</button>
+  </div>
+  <div class="card" style="margin-top:16px"><h3>🛠️ É técnico e prefere instalar à mão?</h3><p>Os comandos, os arquivos e como cada demonstração foi gravada estão no README do GitHub.</p><p><a class="btn ghost" href="https://github.com/inematds/telegram-claude-jarvis#instalação-técnica" target="_blank" rel="noopener">Ver a instalação técnica</a></p></div>
+</div></section>
+
+<section id="prova"><div class="wrap">
+  <span class="chip">A prova</span>
+  <h2>Rodamos as duas opções <span class="amb">de verdade</span></h2>
+  <p class="sub">Nada encenado: as respostas abaixo são as que a IA devolveu, numa pasta de teste.</p>
+  <div class="duas">
+    <div class="prova">
+      <span class="chip">Opção 1 · Claude Code de verdade</span>
+      <ol class="tl" style="margin-top:14px">
+        <li><b>"Quanto espaço livre tem no disco do servidor?"</b><br><span class="mut">Ele consultou o disco e respondeu: 1,3 TB livres de 3,7 TB.</span></li>
+        <li><b>"Apaga os logs com mais de 30 dias."</b> <span class="mut">(logs são arquivos de registro)</span><br><span class="mut">Achou 12 arquivos, cerca de 4,6 MB, e não apagou nada: perguntou "Confirma?".</span></li>
+        <li><b>"Sim, pode apagar."</b><br><span class="mut">Só então apagou e contou: restam 9 arquivos na pasta.</span></li>
+      </ol>
+      <figure class="peca"><img src="assets/prova-opcao1.jpg" alt="Conversa real com o Claude Code na tela estilo Telegram, com o registro da ponte ao lado" loading="lazy"><figcaption>À direita fica o registro da ponte: cada ordem que o Claude deu ao computador, com a hora. Não precisa ler as ordens; o que importa é que tudo fica anotado.</figcaption></figure>
+    </div>
+    <div class="prova">
+      <span class="chip">Opção 2 · Intelecto de verdade</span>
+      <ol class="tl" style="margin-top:14px">
+        <li><b>"Lembre que o servidor de backup se chama Atlas."</b><br><span class="mut">A memória guardou e, na pergunta seguinte, achou.</span></li>
+        <li><b>Mostrar o disco:</b> só leitura, a trava deixou passar e rodou dentro da caixa.</li>
+        <li><b>Apagar a pasta de logs:</b> a trava segurou e pediu o OK. Com o sim, apagou.</li>
+        <li><b>Reiniciar a máquina como administrador:</b> recusado, nem com OK.</li>
+      </ol>
+      <figure class="peca"><img src="assets/prova-opcao2.jpg" alt="Conversa real com o Intelecto, com as 8 peças acendendo ao lado" loading="lazy"><figcaption>As peças são as do Intelecto v2. O cérebro desta demonstração é o de teste: ele não pensa de verdade, segue um roteiro fixo, para mostrar as outras peças funcionando. Os pedidos com "rode:" são do jeito que esse cérebro de teste entende; com uma IA de verdade, você pede com as suas palavras.</figcaption></figure>
+    </div>
+  </div>
+  <p class="rod mut" style="margin-top:16px">Gravado em 19/11/2026, numa pasta de teste. Opção 1: Claude Code pela assinatura, numa tela parecida com o Telegram. Opção 2: a versão 2 do Intelecto, com o cérebro de teste.</p>
+</div></section>
+
+<section id="faq"><div class="wrap">
+  <span class="chip">Perguntas</span>
+  <h2>Perguntas <span class="amb">comuns</span></h2>
+  <div class="grid g2">
+    <div class="card"><h3>O que eu preciso ter?</h3><p>Um computador ligado o tempo todo (ou um servidor alugado), a assinatura do Claude ou do ChatGPT e o Telegram no celular.</p></div>
+    <div class="card"><h3>Preciso saber programar?</h3><p>Não. Você cola o pedido no Claude Code ou no Codex e ele monta com você, explicando cada passo.</p></div>
+    <div class="card"><h3>Alguém pode mandar no meu servidor pelo bot?</h3><p>Não: o bot é montado para aceitar só o seu usuário. Quem não está na lista recebe "acesso negado" (testado na tela de demonstração).</p></div>
+    <div class="card"><h3>Custa alguma coisa?</h3><p>O projeto é grátis. A Opção 1 usa a sua assinatura do Claude. A Opção 2 pode usar uma IA que roda no seu próprio computador (sem pagar nuvem, mas pede um computador forte) ou uma IA da nuvem.</p></div>
+    <div class="card"><h3>Qual eu escolho?</h3><p>Comece pela Opção 1 para ver funcionando. Quando quiser memória, regras próprias e trocar de IA, passe para o Jarvis.</p></div>
+  </div>
+  <p style="margin-top:26px;font-size:1.15rem"><strong>Você mandaria o quê para o seu servidor?</strong> Grátis no inema.club, direto na internet.</p>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <div class="pill">Telegram</div><div class="pill">Claude Code</div><div class="pill">Intelecto v2</div><div class="pill">Grátis</div>
+    <p style="margin-top:18px">Seu Jarvis no Telegram · grátis no inema.club, direto na internet ·
+      <a href="https://github.com/inematds/telegram-claude-jarvis">inematds/telegram-claude-jarvis</a> ·
+      <a href="https://inema.club">INEMA.CLUB</a></p>
+  </div>
+</footer>
+<script>
+  (function(){
+    var KEY='telegram-claude-jarvis-theme';
+    var b=document.body, t=document.getElementById('themeToggle');
+    try{ if(localStorage.getItem(KEY)==='light'){ b.classList.add('light'); t.textContent='☀️'; } }catch(e){}
+    t.addEventListener('click',function(){
+      var light=b.classList.toggle('light');
+      t.textContent=light?'☀️':'🌙';
+      try{ localStorage.setItem(KEY, light?'light':'dark'); }catch(e){}
+    });
+  })();
+  (function(){
+    var bt=document.getElementById('copiarPedido'), tx=document.getElementById('pedidoTxt');
+    if(!bt||!tx) return;
+    bt.addEventListener('click',function(){
+      try{ navigator.clipboard.writeText(tx.textContent).then(function(){ bt.textContent='Copiado ✓'; setTimeout(function(){bt.textContent='Copiar o pedido';},2000); }); }catch(e){}
+    });
+  })();
+</script>
+</body>
+</html>

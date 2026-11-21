@@ -1,0 +1,42 @@
+<template>
+  <style>
+    @font-face { font-family: "Sora"; src: url("assets/fonts/Sora.ttf"); font-weight: 100 800; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #0c0c10; font-family: Inter, sans-serif; color: #e9e9ee; }
+    #z-tit { position: absolute; left: 110px; top: 100px; width: 1400px; font-family: "Sora"; font-size: 80px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
+    #z-tit span { display: inline-block; }
+    #z-tit em { font-style: normal; color: #facc15; }
+    .z-p { position: absolute; width: 300px; height: 120px; border-radius: 22px; background: #16161e; border: 3px solid #4a4220; display: flex; align-items: center; justify-content: center; font-family: "Sora"; font-weight: 700; font-size: 32px; }
+    #z-cer { position: absolute; left: 610px; top: 470px; width: 340px; height: 170px; border-radius: 28px; background: #221d0a; border: 4px solid #facc15; text-align: center; padding-top: 22px; }
+    #z-cer b { font-family: "Sora"; font-size: 38px; display: block; }
+    #z-cer .slot { position: relative; height: 54px; margin-top: 10px; overflow: hidden; }
+    #z-cer .slot i { position: absolute; left: 0; right: 0; font-style: normal; font-weight: 800; font-size: 38px; color: #facc15; opacity: 0; }
+  </style>
+  <div id="root" data-composition-id="troca" data-width="1920" data-height="1080">
+    <p id="z-tit"><span>O cérebro pode mudar.</span> <span id="z-reg"><em>As regras ficam.</em></span></p>
+    <div class="z-p" style="left:110px;top:320px">canal</div>
+    <div class="z-p" style="left:450px;top:320px">loop</div>
+    <div class="z-p" style="left:790px;top:320px">identidade</div>
+    <div class="z-p" style="left:1130px;top:320px">memória</div>
+    <div class="z-p" style="left:110px;top:500px">ferramentas</div>
+    <div class="z-p" style="left:1130px;top:500px">trava</div>
+    <div class="z-p" style="left:110px;top:680px">caixa</div>
+    <div class="z-p" style="left:1130px;top:680px">auditoria</div>
+    <div id="z-cer"><b>Cérebro</b><div class="slot"><i id="s1">local</i><i id="s2">nuvem</i><i id="s3">de teste</i></div></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#z-tit span:first-child", { opacity: 0, y: -30 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 0);
+    tl.set("#z-reg", { opacity: 0 }, 0);
+    tl.fromTo(".z-p", { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.25, stagger: 0.05 }, 0.1);
+    tl.fromTo("#z-cer", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 0.2);
+    const ids = ["#s1", "#s2", "#s3"];
+    for (let k = 0; k < 7; k++) {
+      const t = 0.3 + k * 0.42, id = ids[k % 3];
+      tl.fromTo(id, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.18, ease: "power2.out" }, t);
+      if (k < 6) tl.to(id, { opacity: 0, y: -40, duration: 0.18, ease: "power2.in" }, t + 0.3);
+    }
+    tl.fromTo("#z-reg", { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2)" }, {{t_regras}});
+    tl.to(".z-p", { borderColor: "#facc15", duration: 0.25 }, {{t_regras}});
+    window.__timelines["troca"] = tl;
+  </script>
+</template>

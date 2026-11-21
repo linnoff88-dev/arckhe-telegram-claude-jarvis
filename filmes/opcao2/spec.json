@@ -1,0 +1,42 @@
+{
+ "titulo": "Jarvis do Intelecto por dentro (narrado)",
+ "ancoras": {
+  "A_jarvis": "é o seu Jarvis",
+  "A_antes": "Antes de pensar",
+  "A_ident": "a identidade e a memória",
+  "A_junto": "entram junto",
+  "A_cer": "O cérebro decide",
+  "A_ferr": "pede uma ferramenta",
+  "A_trava": "Aí entra a trava",
+  "A_ler": "Só ler",
+  "A_mudar": "Mudar alguma coisa",
+  "A_destr": "Destruir",
+  "A_caixa": "O comando roda",
+  "A_aud": "tudo fica na auditoria",
+  "A_volta": "A resposta volta",
+  "A_troca": "O cérebro pode mudar",
+  "A_regras": "as regras ficam",
+  "A_cta": "Você daria"
+ },
+ "cenas": [
+  {"id": "capa", "ini": "0", "fim": "A_antes", "vars": {"t_jarvis": "A_jarvis"}},
+  {"id": "contexto", "ini": "A_antes", "fim": "A_cer", "vars": {"t_ident": "A_ident", "t_mem": "A_ident + 0.9", "t_junto": "A_junto"}},
+  {"id": "cerebro", "ini": "A_cer", "fim": "A_trava", "vars": {"t_ferr": "A_ferr"}},
+  {"id": "trava", "ini": "A_trava", "fim": "A_caixa", "vars": {"t_ler": "A_ler", "t_mudar": "A_mudar", "t_destr": "A_destr"}},
+  {"id": "caixa", "ini": "A_caixa", "fim": "A_volta", "vars": {"t_aud": "A_aud"}},
+  {"id": "volta", "ini": "A_volta", "fim": "A_troca"},
+  {"id": "troca", "ini": "A_troca", "fim": "A_cta", "vars": {"t_regras": "A_regras"}},
+  {"id": "marca", "ini": "A_cta", "fim": "END"}
+ ],
+ "sfx": [
+  {"src": "pop-1.wav", "t": "A_antes", "dur": 0.12},
+  {"src": "pop-2.wav", "t": "A_ferr", "dur": 0.12},
+  {"src": "pop-1.wav", "t": "A_ler", "dur": 0.12},
+  {"src": "pop-2.wav", "t": "A_mudar", "dur": 0.12},
+  {"src": "impacto-1.wav", "t": "A_destr", "dur": 2.1, "vol": 0.4},
+  {"src": "pop-3.wav", "t": "A_aud", "dur": 0.12},
+  {"src": "pop-1.wav", "t": "A_volta + 0.6", "dur": 0.12, "vol": 0.8},
+  {"src": "riser-1.wav", "t": "A_cta - 1.6", "dur": 1.6, "vol": 0.35},
+  {"src": "boom-1.wav", "t": "A_cta", "dur": 2.5, "vol": 0.5}
+ ]
+}

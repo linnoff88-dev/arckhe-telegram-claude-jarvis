@@ -1,0 +1,48 @@
+<template>
+  <style>
+    @font-face { font-family: "Sora"; src: url("assets/fonts/Sora.ttf"); font-weight: 100 800; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #0c0c10; font-family: Inter, sans-serif; color: #e9e9ee; }
+    #m-tel { position: absolute; left: 960px; top: 60px; width: 560px; height: 960px; border-radius: 60px; background: #17212b; border: 6px solid #2c2c36; overflow: hidden; }
+    #m-bar { height: 130px; background: #1f2c3a; display: flex; align-items: center; gap: 22px; padding: 30px 30px 0; }
+    #m-ava { width: 72px; height: 72px; border-radius: 50%; background: #facc15; color: #1a1206; font-family: "Sora"; font-weight: 800; font-size: 28px; display: flex; align-items: center; justify-content: center; }
+    #m-nome { font-size: 34px; font-weight: 700; }
+    #m-st { font-size: 24px; color: #7f98ad; }
+    #m-bolha { position: absolute; right: 26px; bottom: 150px; max-width: 440px; background: #2b5278; border-radius: 28px 28px 8px 28px; padding: 22px 26px; font-size: 34px; line-height: 1.3; }
+    #m-in { position: absolute; left: 0; right: 0; bottom: 0; height: 120px; background: #1f2c3a; display: flex; align-items: center; padding: 0 26px; gap: 18px; }
+    #m-campo { flex: 1; height: 70px; border-radius: 35px; background: #17212b; font-size: 28px; display: flex; align-items: center; padding: 0 26px; color: #cfd8e3; white-space: nowrap; overflow: hidden; }
+    #m-campo span { opacity: 0; }
+    #m-cur { display: inline-block; width: 3px; height: 34px; background: #38bdf8; margin-left: 2px; }
+    #m-env { width: 70px; height: 70px; border-radius: 50%; background: #38bdf8; }
+    #m-tit { position: absolute; left: 110px; top: 300px; width: 800px; font-family: "Sora"; font-size: 92px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
+    #m-tit em { font-style: normal; color: #facc15; }
+    #m-sub { position: absolute; left: 110px; top: 580px; width: 760px; font-size: 40px; color: #9a9aa6; line-height: 1.35; }
+  </style>
+  <div id="root" data-composition-id="mensagem" data-width="1920" data-height="1080">
+    <p id="m-tit">Você manda <em>uma mensagem.</em></p>
+    <p id="m-sub">Do jeito que falaria com uma pessoa. Sem abrir o computador.</p>
+    <div id="m-tel">
+      <div id="m-bar"><div id="m-ava">IA</div><div><div id="m-nome">Meu Claude</div><div id="m-st">bot · online</div></div></div>
+      <div id="m-bolha">Quanto espaço livre tem no disco?</div>
+      <div id="m-in"><div id="m-campo"></div><div id="m-env"></div></div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const campo = document.getElementById("m-campo");
+      const txt = "Quanto espaço livre tem no disco?";
+      txt.split("").forEach((c, i) => { const s = document.createElement("span"); s.id = "mc" + i; s.textContent = c === " " ? " " : c; campo.appendChild(s); });
+      const cur = document.createElement("i"); cur.id = "m-cur"; campo.appendChild(cur);
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#m-tel", { y: 120, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, 0);
+      tl.fromTo("#m-tit", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.3, ease: "power3.out" }, 0.1);
+      tl.fromTo("#m-cur", { opacity: 1 }, { opacity: 0, duration: 0.25, yoyo: true, repeat: 3 }, 0.3);
+      txt.split("").forEach((c, i) => tl.set("#mc" + i, { opacity: 1 }, {{dig_ini}} + i * {{passo}}));
+      tl.set("#m-bolha", { opacity: 0 }, 0);
+      tl.fromTo("#m-sub", { opacity: 0 }, { opacity: 1, duration: 0.3 }, {{dig_ini}});
+      tl.to("#m-env", { scale: 0.85, duration: 0.06, yoyo: true, repeat: 1 }, {{envio}});
+      tl.set(["#m-campo span", "#m-cur"], { opacity: 0 }, {{envio}} + 0.06);
+      tl.fromTo("#m-bolha", { opacity: 0, y: 30, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.3, ease: "back.out(2)" }, {{envio}} + 0.06);
+      window.__timelines["mensagem"] = tl;
+    })();
+  </script>
+</template>

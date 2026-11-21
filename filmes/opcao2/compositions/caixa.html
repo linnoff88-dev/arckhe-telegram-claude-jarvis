@@ -1,0 +1,40 @@
+<template>
+  <style>
+    @font-face { font-family: "Sora"; src: url("assets/fonts/Sora.ttf"); font-weight: 100 800; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #0c0c10; font-family: Inter, sans-serif; color: #e9e9ee; }
+    #b-tit { position: absolute; left: 110px; top: 110px; width: 1400px; font-family: "Sora"; font-size: 76px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
+    #b-tit em { font-style: normal; color: #facc15; }
+    #b-cx { position: absolute; left: 110px; top: 300px; width: 660px; height: 470px; border: 5px dashed #facc15; border-radius: 36px; padding: 36px; }
+    #b-cx h4 { font-family: "Sora"; font-size: 34px; color: #facc15; }
+    #b-net { position: absolute; right: 30px; top: 30px; font-size: 26px; font-weight: 700; color: #f87171; border: 3px solid #f87171; border-radius: 12px; padding: 6px 14px; }
+    #b-pasta { margin-top: 30px; background: #16161e; border: 3px solid #272730; border-radius: 20px; padding: 22px; font-family: monospace; font-size: 30px; line-height: 1.6; }
+    #b-cmd { margin-top: 22px; font-family: monospace; font-size: 34px; color: #b8f5c9; }
+    #b-aud { position: absolute; left: 850px; top: 300px; width: 660px; }
+    #b-aud h4 { font-family: "Sora"; font-size: 30px; color: #9a9aa6; letter-spacing: 0.1em; margin-bottom: 14px; }
+    .b-l { background: #14141b; border-left: 5px solid #3a3a46; border-radius: 10px; padding: 12px 16px; margin-bottom: 12px; font-family: monospace; font-size: 29px; line-height: 1.35; color: #c9c9d3; }
+    .b-l em { font-style: normal; color: #facc15; }
+  </style>
+  <div id="root" data-composition-id="caixa" data-width="1920" data-height="1080">
+    <p id="b-tit">Roda numa <em>caixa sem internet.</em></p>
+    <div id="b-cx"><h4>CAIXA · Docker</h4><span id="b-net">✗ sem rede</span>
+      <div id="b-pasta">📁 pasta de trabalho<br>&nbsp;&nbsp;└ logs/</div>
+      <div id="b-cmd">$ rm -r logs</div>
+    </div>
+    <div id="b-aud"><h4>AUDITORIA</h4>
+      <div class="b-l" id="l1"><em>comando</em> rm -r logs · pede OK</div>
+      <div class="b-l" id="l2"><em>dono</em> aprovou</div>
+      <div class="b-l" id="l3"><em>caixa</em> rodou · saída 0</div>
+      <div class="b-l" id="l4"><em>ferramenta</em> rodar_comando · ok</div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#b-tit", { opacity: 0, y: -30 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 0);
+    tl.fromTo("#b-cx", { opacity: 0, scale: 0.94 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.6)" }, 0.1);
+    tl.fromTo("#b-net", { opacity: 0, scale: 1.4 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)" }, 0.7);
+    tl.fromTo("#b-cmd", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 1.0);
+    tl.fromTo("#b-aud h4", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 3.85 - 0.2);
+    tl.fromTo(["#l1", "#l2", "#l3", "#l4"], { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.25, stagger: 0.22, ease: "power3.out" }, 3.85);
+    window.__timelines["caixa"] = tl;
+  </script>
+</template>

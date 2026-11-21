@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Telegram como controle remoto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0c10;--bg2:#14141b;--card:#16161e;--line:#272730;--txt:#e9e9ee;--mut:#9a9aa6;
+  --amb:#FACC15;--ink:#1a1206;--sky:#38bdf8;--ok:#4ade80;--warn:#f2b45c;
+  --tg:#17212b;--tgme:#2b5278;--tgbot:#182533;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--txt);font-family:Inter,system-ui,sans-serif}
+body{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:28px 16px 40px}
+h1{font-family:Sora,sans-serif;font-weight:800;font-size:clamp(24px,3.4vw,40px);letter-spacing:-.02em;text-align:center}
+h1 mark{background:none;color:var(--amb)}
+.sub{color:var(--mut);margin:8px 0 18px;text-align:center;max-width:62ch}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:22px}
+.tabs button{font-family:Sora,sans-serif;font-weight:600;font-size:14px;padding:9px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--txt);cursor:pointer;transition:transform .15s,background .2s,border-color .2s}
+.tabs button:hover{transform:translateY(-1px);border-color:#3a3a46}
+.tabs button[aria-pressed=true]{background:var(--amb);color:var(--ink);border-color:var(--amb)}
+.tabs button:focus-visible{outline:2px solid var(--sky);outline-offset:2px}
+
+.stage{width:min(1180px,100%);display:grid;grid-template-columns:340px 1fr;gap:34px;align-items:center}
+@media (max-width:860px){.stage{grid-template-columns:1fr}.phone{margin:0 auto}}
+
+/* --- telefone / Telegram --- */
+.phone{width:340px;height:620px;border-radius:38px;background:#0a0a0d;border:2px solid #2c2c36;padding:12px;box-shadow:0 30px 80px -30px #000,0 0 0 6px #121218}
+.screen{height:100%;border-radius:28px;background:var(--tg);overflow:hidden;display:flex;flex-direction:column}
+.tgbar{display:flex;align-items:center;gap:10px;padding:14px 14px 12px;background:#1f2c3a}
+.ava{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--amb),#f0a020);display:grid;place-items:center;font-family:Sora;font-weight:800;color:var(--ink);font-size:15px}
+.tgbar b{display:block;font-size:15px}
+.tgbar small{color:#7f98ad;font-size:12px}
+.tgbar small.typing{color:var(--sky)}
+.chat{flex:1;padding:12px 10px;display:flex;flex-direction:column;gap:8px;overflow:hidden;justify-content:flex-end;
+  background:radial-gradient(circle at 30% 20%,#1c2a38 0,transparent 60%),var(--tg)}
+.msg{max-width:84%;padding:8px 11px 6px;border-radius:14px;font-size:14px;line-height:1.38;opacity:0;transform:translateY(10px) scale(.96);transition:opacity .28s,transform .38s cubic-bezier(.2,1.4,.4,1)}
+.msg.in{opacity:1;transform:none}
+.msg.me{align-self:flex-end;background:var(--tgme);border-bottom-right-radius:4px}
+.msg.bot{align-self:flex-start;background:var(--tgbot);border-bottom-left-radius:4px}
+.msg code{font-family:"JetBrains Mono",monospace;font-size:12px;background:#0e1620;padding:1px 5px;border-radius:5px}
+.msg .t{display:block;text-align:right;font-size:10.5px;color:#7f98ad;margin-top:2px}
+.msg .btns{display:flex;gap:6px;margin-top:8px}
+.msg .btns span{flex:1;text-align:center;padding:6px;border-radius:8px;background:#243447;font-size:13px;font-weight:600;transition:background .2s,transform .15s}
+.msg .btns span.hit{background:var(--amb);color:var(--ink);transform:scale(.95)}
+.tginput{display:flex;align-items:center;gap:8px;padding:10px 12px;background:#1f2c3a}
+.tginput div{flex:1;min-height:34px;border-radius:17px;background:#17212b;padding:8px 14px;font-size:14px;color:#cfd8e3;white-space:nowrap;overflow:hidden}
+.tginput div:empty::before{content:"Mensagem";color:#5d7286}
+.tginput i{width:34px;height:34px;border-radius:50%;background:var(--sky);display:grid;place-items:center;font-style:normal;color:#0c0c10;font-weight:800}
+
+/* --- diagrama --- */
+.flow{position:relative;height:560px}
+.node{position:absolute;width:210px;padding:14px 16px;border-radius:16px;background:var(--card);border:1px solid var(--line);transition:border-color .3s,box-shadow .3s,transform .3s}
+.node h3{font-family:Sora;font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px}
+.node p{font-size:12.5px;color:var(--mut);margin-top:5px;line-height:1.4}
+.node .tag{font-family:"JetBrains Mono";font-size:11px;color:var(--amb);display:block;margin-top:7px;min-height:14px}
+.node.on{border-color:var(--amb);box-shadow:0 0 0 4px #facc1522,0 18px 40px -20px #facc1566;transform:translateY(-3px)}
+.node.ok{border-color:var(--ok)}
+.node.warn{border-color:var(--warn);box-shadow:0 0 0 4px #f2b45c22}
+.ico{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:14px;background:#22222c}
+#nTg{left:0;top:40px}
+#nBot{left:290px;top:40px}
+#nCl{left:290px;top:300px}
+#nVps{left:0;top:300px;width:250px}
+#nVps .term{margin-top:8px;height:96px;border-radius:8px;background:#0a0a0d;border:1px solid #22222a;padding:7px 8px;font-family:"JetBrains Mono";font-size:11px;line-height:1.45;color:#b8f5c9;overflow:hidden;white-space:pre}
+.box-vps{position:absolute;left:-14px;top:268px;width:540px;height:262px;border:1.5px dashed #3a3a46;border-radius:20px}
+.box-vps span{position:absolute;top:-11px;left:18px;background:var(--bg);padding:0 8px;font-family:Sora;font-size:12px;color:var(--mut);letter-spacing:.08em}
+svg.wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+svg.wires path{fill:none;stroke:#2f2f3a;stroke-width:2;stroke-dasharray:5 6}
+.pkt{position:absolute;left:0;top:0;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:var(--amb);box-shadow:0 0 18px 4px #facc1588;opacity:0;will-change:transform}
+.pkt.back{background:var(--sky);box-shadow:0 0 18px 4px #38bdf888}
+.legend{position:absolute;right:0;top:40px;width:250px;font-size:13px;color:var(--mut);line-height:1.55}
+.legend b{color:var(--txt);font-family:Sora}
+.legend ol{padding-left:18px;margin-top:8px}
+.legend li{transition:color .3s}
+.legend li.on{color:var(--amb)}
+@media (max-width:1180px){.legend{display:none}}
+@media (max-width:560px){.flow{transform:scale(.62);transform-origin:0 0;height:360px;width:560px}}
+.note{color:var(--mut);font-size:12.5px;margin-top:20px;text-align:center}
+.note a{color:var(--sky)}
+</style>
+</head>
+<body>
+<h1>Telegram como <mark>controle remoto</mark> do Claude Code</h1>
+<p class="sub">Você manda a mensagem no celular. O bot confere se é você e repassa. O Claude Code, rodando no seu servidor, pensa, executa e responde no mesmo chat.</p>
+
+<div class="tabs" role="group" aria-label="Escolha a demonstração">
+  <button data-c="pergunta" aria-pressed="true">1 · Responde uma pergunta</button>
+  <button data-c="executa" aria-pressed="false">2 · Executa no servidor</button>
+  <button data-c="aprova" aria-pressed="false">3 · Pede aprovação antes</button>
+</div>
+
+<div class="stage">
+  <div class="phone" aria-hidden="true">
+    <div class="screen">
+      <div class="tgbar"><div class="ava">IA</div><div><b>Meu Claude</b><small id="st">bot · online</small></div></div>
+      <div class="chat" id="chat"></div>
+      <div class="tginput"><div id="typ"></div><i>➤</i></div>
+    </div>
+  </div>
+
+  <div class="flow" id="flow">
+    <svg class="wires" viewBox="0 0 800 560" preserveAspectRatio="none">
+      <path d="M210 90 L290 90"/><path d="M395 150 L395 300"/><path d="M290 360 L250 360"/>
+    </svg>
+    <div class="box-vps"><span>SEU SERVIDOR (VPS)</span></div>
+    <div class="node" id="nTg"><h3><span class="ico">✈️</span>Telegram</h3><p>Só a porta de entrada e saída.</p><span class="tag" id="gTg"></span></div>
+    <div class="node" id="nBot"><h3><span class="ico">🛡️</span>Bot / ponte</h3><p>Confere quem falou e repassa o pedido.</p><span class="tag" id="gBot"></span></div>
+    <div class="node" id="nCl"><h3><span class="ico">🧠</span>Claude Code</h3><p>Entende, decide e usa as ferramentas.</p><span class="tag" id="gCl"></span></div>
+    <div class="node" id="nVps"><h3><span class="ico">⚙️</span>Terminal e arquivos</h3><p>Onde o trabalho acontece.</p><div class="term" id="term"></div></div>
+    <div class="legend"><b>O caminho</b><ol id="steps">
+      <li>Você escreve no Telegram</li><li>O bot confere se é você</li><li>O Claude Code entende o pedido</li><li>Executa no servidor, se precisar</li><li>A resposta volta no chat</li></ol></div>
+    <div class="pkt" id="pkt"></div>
+  </div>
+</div>
+<p class="note">Demonstração animada do conceito (Opção 1). Os textos e números são ilustrativos. · <a href="?motion=off">ver parado</a></p>
+
+<script>
+const $=s=>document.querySelector(s);
+const chat=$("#chat"),typ=$("#typ"),term=$("#term"),pkt=$("#pkt"),st=$("#st");
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches||new URLSearchParams(location.search).get("motion")==="off";
+// posição do centro de cada nó dentro do .flow
+const P={tg:[105,90],bot:[395,90],cl:[395,360],vps:[125,360]};
+const ROTEIRO=new URLSearchParams(location.search).get("roteiro")==="1";
+let run=0,visible=true,currentCase="pergunta",userTouched=false;
+const wait=ms=>new Promise((r,j)=>{const id=run;const t0=performance.now();(function tick(){if(id!==run)return j("stop");if(!visible){requestAnimationFrame(tick);return}if(performance.now()-t0>=ms)return r();requestAnimationFrame(tick)})()});
+const now=()=>new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
+function bubble(who,html){const m=document.createElement("div");m.className="msg "+who;m.innerHTML=html+'<span class="t">'+now()+(who==="me"?" ✓✓":"")+"</span>";chat.appendChild(m);while(chat.children.length>6)chat.firstChild.remove();requestAnimationFrame(()=>m.classList.add("in"));return m}
+function on(id,cls="on"){document.querySelectorAll(".node").forEach(n=>n.classList.remove("on","warn"));if(id)$(id).classList.add(cls)}
+function step(n){document.querySelectorAll("#steps li").forEach((l,i)=>l.classList.toggle("on",i===n-1))}
+function tag(id,t){$(id).textContent=t}
+async function typeIn(text){typ.textContent="";for(const ch of text){typ.textContent+=ch;await wait(34)}await wait(260);typ.textContent=""}
+async function fly(a,b,back=false,ms=650){pkt.classList.toggle("back",back);pkt.style.transition="none";pkt.style.transform=`translate(${P[a][0]}px,${P[a][1]}px)`;pkt.style.opacity=1;await wait(30);pkt.style.transition=`transform ${ms}ms cubic-bezier(.65,0,.35,1)`;pkt.style.transform=`translate(${P[b][0]}px,${P[b][1]}px)`;await wait(ms);pkt.style.opacity=0}
+async function termType(lines){term.textContent="";for(const l of lines){for(const ch of l){term.textContent+=ch;await wait(14)}term.textContent+="\n";await wait(160)}}
+function reset(){chat.innerHTML="";term.textContent="$ _";["#gTg","#gBot","#gCl"].forEach(i=>tag(i,""));on(null);step(0);document.querySelectorAll(".node").forEach(n=>n.classList.remove("ok"));st.textContent="bot · online";st.className=""}
+
+const CASES={
+ async pergunta(){
+  step(1);on("#nTg");await typeIn("O que é um webhook? Explica curto.");bubble("me","O que é um webhook? Explica curto.");tag("#gTg","mensagem enviada");
+  await fly("tg","bot");step(2);on("#nBot");tag("#gBot","✓ usuário autorizado");await wait(700);
+  await fly("bot","cl");step(3);on("#nCl");tag("#gCl","pensando…");st.textContent="digitando…";st.className="typing";await wait(1300);
+  tag("#gCl","✓ resposta pronta");step(5);await fly("cl","bot",true);await fly("bot","tg",true,550);on("#nTg");
+  bubble("bot","É um <b>aviso automático</b>: quando algo acontece num sistema, ele chama um endereço seu na hora. Ex.: chegou um pagamento → o site avisa seu bot.");
+  st.textContent="bot · online";st.className="";$("#nTg").classList.add("ok");await wait(2600)},
+ async executa(){
+  step(1);on("#nTg");await typeIn("Quanto espaço livre tem no servidor?");bubble("me","Quanto espaço livre tem no servidor?");
+  await fly("tg","bot");step(2);on("#nBot");tag("#gBot","✓ usuário autorizado");await wait(600);
+  await fly("bot","cl");step(3);on("#nCl");tag("#gCl","vou olhar o disco");st.textContent="digitando…";st.className="typing";await wait(700);
+  await fly("cl","vps");step(4);on("#nVps");await termType(["$ df -h /","Tam   Usado  Livre  Uso%","3,7T  2,3T   1,3T   65%"]);
+  await fly("vps","cl",true);on("#nCl");tag("#gCl","✓ li o resultado");await wait(500);step(5);
+  await fly("cl","bot",true);await fly("bot","tg",true,550);on("#nTg");
+  bubble("bot","Rodei <code>df -h /</code> no servidor: <b>1,3 TB livres</b> de 3,7 TB (65% em uso). Tudo tranquilo.");
+  st.textContent="bot · online";st.className="";$("#nTg").classList.add("ok");await wait(2600)},
+ async aprova(){
+  step(1);on("#nTg");await typeIn("Apaga os logs com mais de 30 dias.");bubble("me","Apaga os logs com mais de 30 dias.");
+  await fly("tg","bot");step(2);on("#nBot");tag("#gBot","✓ usuário autorizado");await wait(500);
+  await fly("bot","cl");step(3);on("#nCl");tag("#gCl","ação que apaga → pedir OK");await wait(900);on("#nCl","warn");
+  await fly("cl","bot",true);await fly("bot","tg",true,550);on("#nTg");
+  const m=bubble("bot","⚠️ Isso <b>apaga arquivos</b>: 12 logs antigos, 4,6 MB. Confirma?<div class='btns'><span id='bS'>Sim, apagar</span><span>Não</span></div>");
+  await wait(1500);const b=m.querySelector("#bS");b.classList.add("hit");await wait(400);bubble("me","Sim, apagar");
+  await fly("tg","bot");tag("#gBot","✓ aprovação recebida");await fly("bot","cl");on("#nCl");tag("#gCl","executando");
+  await fly("cl","vps");step(4);on("#nVps");await termType(["$ find logs -mtime +30 -delete","12 arquivos removidos","4,6M liberados"]);
+  await fly("vps","cl",true);step(5);await fly("cl","bot",true);await fly("bot","tg",true,550);on("#nTg");
+  bubble("bot","✓ Feito. Apaguei <b>12 logs</b> e liberei <b>4,6 MB</b>. Registrei a ação no histórico.");$("#nTg").classList.add("ok");await wait(2800)}
+};
+function finalState(c){reset();
+ if(c==="pergunta"){bubble("me","O que é um webhook? Explica curto.");bubble("bot","É um <b>aviso automático</b>: quando algo acontece num sistema, ele chama um endereço seu na hora.")}
+ if(c==="executa"){bubble("me","Quanto espaço livre tem no servidor?");bubble("bot","Rodei <code>df -h /</code>: <b>1,3 TB livres</b> de 3,7 TB.");term.textContent="$ df -h /\nTam   Usado  Livre  Uso%\n3,7T  2,3T   1,3T   65%"}
+ if(c==="aprova"){bubble("me","Apaga os logs com mais de 30 dias.");bubble("bot","⚠️ Isso <b>apaga arquivos</b>. Confirma?");bubble("me","Sim, apagar");bubble("bot","✓ Feito. 12 logs, 4,6 MB liberados.")}
+ document.querySelectorAll(".msg").forEach(m=>m.classList.add("in"));step(5)}
+const ORDER=["pergunta","executa","aprova"];
+function setTab(c){document.querySelectorAll(".tabs button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.c===c))}
+async function play(c){run++;currentCase=c;setTab(c);if(reduce){finalState(c);return}reset();const id=run;
+ try{await CASES[c]();if(ROTEIRO)return;if(id===run&&!userTouched){play(ORDER[(ORDER.indexOf(c)+1)%3])}else if(id===run){play(c)}}catch(e){}}
+document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click",()=>{userTouched=true;play(b.dataset.c)}));
+new IntersectionObserver(es=>{visible=es[0].isIntersecting}).observe($("#flow"));
+window.cena=n=>{if(n.startsWith("caso:"))return play(n.slice(5));run++;reset();if(n!=="todos")on("#"+n)};
+if(!ROTEIRO)play("pergunta");else{reset()}
+</script>
+</body>
+</html>

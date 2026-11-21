@@ -1,0 +1,35 @@
+<template>
+  <style>
+    @font-face { font-family: "Sora"; src: url("assets/fonts/Sora.ttf"); font-weight: 100 800; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #0c0c10; font-family: Inter, sans-serif; color: #e9e9ee; }
+    #v-tit { position: absolute; left: 110px; top: 110px; font-family: "Sora"; font-size: 84px; font-weight: 800; letter-spacing: -0.03em; }
+    #v-tit em { font-style: normal; color: #facc15; }
+    .v-l { position: absolute; left: 110px; width: 1400px; height: 150px; border-radius: 26px; background: #16161e; border: 3px solid #272730; display: flex; align-items: center; padding: 0 34px; gap: 30px; }
+    #v1 { top: 290px; } #v2 { top: 470px; } #v3 { top: 650px; }
+    .v-l code { font-family: monospace; font-size: 40px; width: 360px; color: #e9e9ee; }
+    .v-l .tipo { font-size: 30px; color: #9a9aa6; width: 280px; }
+    .v-l .res { font-family: "Sora"; font-weight: 800; font-size: 40px; white-space: nowrap; }
+    #v1 .res { color: #4ade80; } #v2 .res { color: #facc15; } #v3 .res { color: #f87171; }
+    #v1.on { border-color: #4ade80; } #v2.on { border-color: #facc15; } #v3.on { border-color: #f87171; }
+    #v2 .bt { display: inline-flex; gap: 10px; margin-left: 16px; }
+    #v2 .bt i { font-style: normal; font-family: Inter; font-size: 24px; font-weight: 700; padding: 8px 16px; border-radius: 10px; background: #243447; }
+    #v2 .bt i.sim { background: #facc15; color: #1a1206; }
+  </style>
+  <div id="root" data-composition-id="trava" data-width="1920" data-height="1080">
+    <p id="v-tit">Aí entra <em>a trava.</em></p>
+    <div class="v-l" id="v1"><code>ls logs</code><span class="tipo">só lê</span><span class="res">✓ passa direto</span></div>
+    <div class="v-l" id="v2"><code>rm -r logs</code><span class="tipo">muda arquivos</span><span class="res">pede o seu OK</span><span class="bt"><i class="sim">Sim</i><i>Não</i></span></div>
+    <div class="v-l" id="v3"><code>sudo reboot</code><span class="tipo">destrutivo</span><span class="res">✗ recusado, sempre</span></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#v-tit", { opacity: 0, y: -30 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 0);
+    [["#v1", {{t_ler}}, "#4ade80"], ["#v2", {{t_mudar}}, "#facc15"], ["#v3", {{t_destr}}, "#f87171"]].forEach(([id, t, cor]) => {
+      tl.fromTo(id, { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: 0.3, ease: "power3.out" }, t);
+      tl.to(id, { borderColor: cor, duration: 0.2 }, t + 0.35);
+    });
+    tl.fromTo("#v2 .bt", { opacity: 0 }, { opacity: 1, duration: 0.2 }, {{t_mudar}} + 0.5);
+    tl.fromTo("#v3", { x: 0 }, { x: 12, duration: 0.06, yoyo: true, repeat: 5 }, {{t_destr}} + 0.45);
+    window.__timelines["trava"] = tl;
+  </script>
+</template>

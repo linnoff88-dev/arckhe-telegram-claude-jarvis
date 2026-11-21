@@ -1,0 +1,38 @@
+{
+ "titulo": "Telegram como controle remoto do Claude Code (narrado)",
+ "ancoras": {
+  "A_ia": "e a inteligência artificial",
+  "A_msg": "Você manda uma mensagem",
+  "A_quanto": "quanto espaço livre",
+  "A_cam": "O pedido faz este caminho",
+  "A_tg": "O Telegram entrega",
+  "A_bot": "O bot confere",
+  "A_cl": "O Claude Code entende",
+  "A_term": "E o terminal executa",
+  "A_volta": "Depois a resposta",
+  "A_chat": "até o seu chat",
+  "A_regra": "E se o pedido",
+  "A_sim": "com o seu sim",
+  "A_cta": "Você mandaria"
+ },
+ "cenas": [
+  {"id": "gancho", "ini": "0", "fim": "A_msg", "vars": {"t_ia": "A_ia"}},
+  {"id": "mensagem", "ini": "A_msg", "fim": "A_cam", "vars": {"dig_ini": "A_quanto - 0.2", "passo": "ini + min(0.06, (A_cam - A_quanto - 0.6) / 33)", "envio": "A_cam - 0.45"}},
+  {"id": "caminho", "ini": "A_cam", "fim": "A_chat + 0.2", "vars": {"t_tg": "A_tg", "t_bot": "A_bot", "t_cl": "A_cl", "t_term": "A_term", "t_volta": "A_volta", "passo_volta": "ini + min(0.55, (A_chat - A_volta - 0.3) / 3)"}},
+  {"id": "terminal", "ini": "A_chat + 0.2", "fim": "A_regra", "vars": {"t_bolha": "A_chat + 0.5"}},
+  {"id": "regra", "ini": "A_regra", "fim": "A_cta", "vars": {"t_sim": "A_sim"}},
+  {"id": "marca", "ini": "A_cta", "fim": "END"}
+ ],
+ "sfx": [
+  {"src": "pop-1.wav", "t": "A_msg", "dur": 0.12},
+  {"src": "clique-1.wav", "t": "A_cam - 0.45", "dur": 0.05, "vol": 1},
+  {"src": "pop-2.wav", "t": "A_cam - 0.4", "dur": 0.12},
+  {"src": "pop-3.wav", "t": "A_bot", "dur": 0.12},
+  {"src": "pop-1.wav", "t": "A_cl", "dur": 0.12},
+  {"src": "pop-2.wav", "t": "A_term", "dur": 0.12},
+  {"src": "pop-3.wav", "t": "A_chat + 0.5", "dur": 0.12, "vol": 0.8},
+  {"src": "clique-1.wav", "t": "A_sim", "dur": 0.05, "vol": 1},
+  {"src": "riser-1.wav", "t": "A_cta - 1.6", "dur": 1.6, "vol": 0.35},
+  {"src": "boom-1.wav", "t": "A_cta", "dur": 2.5, "vol": 0.5}
+ ]
+}

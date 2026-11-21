@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jarvis do Intelecto: as 8 peças</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* Jarvis do Intelecto: 8 peças em grade; ao clicar (ou no roteiro) a peça acende, a ficha diz POR QUÊ e COMO,
+   e o celular mostra um exemplo dela. Paleta INEMA: preto + amarelo. */
+:root{
+  --bg:#0c0c10;--bg2:#14141b;--card:#16161e;--line:#272730;--txt:#e9e9ee;--mut:#9a9aa6;
+  --amb:#FACC15;--ink:#1a1206;--sky:#38bdf8;--ok:#4ade80;--red:#f87171;
+  --tg:#17212b;--tgme:#2b5278;--tgbot:#182533;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--txt);font-family:Inter,system-ui,sans-serif}
+body{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 16px 32px}
+h1{font-family:Sora,sans-serif;font-weight:800;font-size:clamp(24px,3.2vw,38px);letter-spacing:-.02em;text-align:center}
+h1 mark{background:none;color:var(--amb)}
+.sub{color:var(--mut);margin:6px 0 18px;text-align:center;max-width:70ch}
+.stage{width:min(1480px,100%);display:grid;grid-template-columns:300px 1fr 360px;gap:26px;align-items:start}
+@media (max-width:1100px){.stage{grid-template-columns:1fr}.phone{margin:0 auto}}
+
+/* celular */
+.phone{width:300px;height:640px;border-radius:36px;background:#0a0a0d;border:2px solid #2c2c36;padding:11px;box-shadow:0 30px 80px -30px #000,0 0 0 6px #121218}
+.screen{height:100%;border-radius:26px;overflow:hidden;background:#0e1621;display:flex;flex-direction:column}
+.tghead{display:flex;gap:10px;align-items:center;padding:12px 14px;background:var(--tg)}
+.tghead .ava{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-family:Sora;font-weight:800;color:var(--ink);background:linear-gradient(135deg,#FACC15,#f0a020)}
+.tghead b{font-size:15px;display:block}.tghead small{font-size:12px;color:#7f91a4}
+#chat{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:7px;padding:12px;overflow:hidden}
+.msg{max-width:88%;padding:8px 11px;border-radius:13px;font-size:13.5px;line-height:1.38;opacity:0;transform:translateY(10px);transition:opacity .28s,transform .38s cubic-bezier(.2,1.4,.4,1)}
+.msg.in{opacity:1;transform:none}
+.msg.me{align-self:flex-end;background:var(--tgme);border-bottom-right-radius:4px}
+.msg.bot{align-self:flex-start;background:var(--tgbot);border-bottom-left-radius:4px}
+.msg code{font-family:"JetBrains Mono",monospace;font-size:12px;color:#b8f5c9}
+.msg .btns{display:flex;gap:6px;margin-top:7px}.msg .btns span{flex:1;text-align:center;padding:6px;border-radius:7px;background:#2b5278;font-weight:700;font-size:12.5px}
+.msg .btns span.sim{background:var(--amb);color:var(--ink)}
+.tginput{display:flex;gap:8px;padding:9px 10px;background:var(--tg)}.tginput div{flex:1;height:32px;border-radius:16px;background:#242f3d}
+.tginput i{width:32px;height:32px;border-radius:50%;background:var(--sky)}
+
+/* grade das 8 peças */
+.grade{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;position:relative}
+.pc{position:relative;background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:14px 14px 13px;cursor:pointer;text-align:left;color:var(--txt);font:inherit;
+  transition:border-color .25s,background .25s,transform .3s cubic-bezier(.2,1.4,.4,1),opacity .25s;min-height:172px}
+.pc:hover{border-color:#3a3a46}
+.pc:focus-visible{outline:2px solid var(--sky);outline-offset:2px}
+.pc .num{font-family:Sora;font-weight:800;font-size:13px;color:var(--ink);background:#3a3a46;border-radius:7px;padding:1px 8px;display:inline-block;margin-bottom:8px;transition:background .25s}
+.pc b{display:block;font-family:Sora;font-size:19px;letter-spacing:-.01em}
+.pc small{display:block;color:var(--mut);font-size:14px;margin-top:4px;line-height:1.35}
+.pc code{display:block;margin-top:8px;font-family:"JetBrains Mono",monospace;font-size:11px;color:#6c6c78}
+.grade.foco .pc{opacity:.38}
+.grade .pc.on{opacity:1;border-color:var(--amb);background:#221d0a;transform:translateY(-4px) scale(1.03)}
+.grade .pc.on .num{background:var(--amb)}
+.grade.todas .pc{opacity:1;border-color:#4a4220}
+.grade.todas .pc.cer{border-color:var(--amb);background:#221d0a}
+.faixa{grid-column:1/-1;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--mut);padding:2px 4px}
+.faixa span{flex:1;height:1px;background:linear-gradient(90deg,transparent,#3a3a46,transparent)}
+.fluxo{margin-top:16px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--mut)}
+.fluxo span{padding:5px 9px;border:1px solid var(--line);border-radius:8px;background:var(--bg2);transition:all .25s}
+.fluxo span.on{border-color:var(--amb);color:var(--amb)}
+.fluxo i{font-style:normal;color:#5a5a66}
+
+/* ficha */
+.ficha{background:var(--bg2);border:1px solid var(--line);border-radius:18px;padding:20px 20px 18px;min-height:380px}
+.ficha .eye{font-family:Sora;font-size:12px;letter-spacing:.12em;color:var(--mut)}
+.ficha h2{font-family:Sora;font-weight:800;font-size:26px;letter-spacing:-.02em;margin:4px 0 14px}
+.ficha h2 em{font-style:normal;color:var(--amb)}
+.ficha h3{font-family:Sora;font-size:12.5px;letter-spacing:.1em;color:var(--amb);margin:12px 0 4px}
+.ficha p{font-size:15.5px;line-height:1.45}
+.ficha code{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:#b8f5c9}
+.ficha .arq{margin-top:14px;font-family:"JetBrains Mono",monospace;font-size:12px;color:#6c6c78}
+.ficha .corpo{transition:opacity .25s}.ficha .corpo.sai{opacity:0}
+.nota{margin-top:14px;font-size:12.5px;color:#6c6c78;text-align:center}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<h1>O <mark>Jarvis</mark> do Intelecto: 8 peças, cada uma com um motivo</h1>
+<p class="sub">Você fala pelo Telegram. O cérebro pensa, e as outras sete peças garantem que ele trabalhe para você, do seu jeito e com segurança. Clique numa peça.</p>
+<div class="stage">
+  <div class="phone"><div class="screen">
+    <div class="tghead"><div class="ava">J</div><div><b>Meu Jarvis</b><small id="st">bot · Intelecto</small></div></div>
+    <div id="chat"></div>
+    <div class="tginput"><div></div><i></i></div>
+  </div></div>
+
+  <div>
+    <div class="grade" id="grade">
+      <div class="faixa">entra pelo canal <span></span> o loop monta o contexto e pensa</div>
+      <button class="pc" data-p="1"><span class="num">1</span><b>Canal</b><small>Telegram ou terminal; só responde ao dono</small><code>canais/telegram.py</code></button>
+      <button class="pc" data-p="2"><span class="num">2</span><b>Loop com freio</b><small>pensa → ferramenta → responde, até 5 rodadas</small><code>agente/loop.py</code></button>
+      <button class="pc" data-p="3"><span class="num">3</span><b>Identidade</b><small>SOUL · AGENTS · USER · MEMORY</small><code>identidade/*.md</code></button>
+      <button class="pc cer" data-p="4"><span class="num">4</span><b>Cérebro</b><small>local, nuvem ou de teste</small><code>provedores/</code></button>
+      <div class="faixa">o que ele sabe e o que ele faz <span></span> e o que o segura</div>
+      <button class="pc" data-p="5"><span class="num">5</span><b>Memória</b><small>guarda e acha, até sem acento</small><code>memoria/store.py</code></button>
+      <button class="pc" data-p="6"><span class="num">6</span><b>Ferramentas</b><small>memória, arquivos, comando</small><code>ferramentas/basicas.py</code></button>
+      <button class="pc" data-p="7"><span class="num">7</span><b>Trava e cofre</b><small>lê passa · muda pede OK · destrói, não</small><code>seguranca/</code></button>
+      <button class="pc" data-p="8"><span class="num">8</span><b>Caixa</b><small>Docker sem internet</small><code>seguranca/executor.py</code></button>
+    </div>
+    <div class="fluxo" id="fluxo"><span data-f="1">Telegram</span><i>→</i><span data-f="3">identidade + memória</span><i>→</i><span data-f="4">cérebro</span><i>→</i><span data-f="7">trava</span><i>→</i><span data-f="8">caixa</span><i>→</i><span data-f="1">resposta no chat</span></div>
+  </div>
+
+  <aside class="ficha" aria-live="polite">
+    <div class="corpo" id="ficha">
+      <div class="eye">COMO LER</div>
+      <h2>Cada peça responde a <em>duas perguntas</em></h2>
+      <h3>POR QUÊ</h3><p>O problema que ela evita.</p>
+      <h3>COMO</h3><p>O que ela faz de verdade, no código do Intelecto v2.</p>
+    </div>
+  </aside>
+</div>
+<p class="nota">Peças do INTELECTO v2 (código aberto). Exemplos no celular são ilustrativos; a demonstração real roda o próprio Intelecto.</p>
+
+<script>
+const $=s=>document.querySelector(s),chat=$("#chat"),grade=$("#grade"),ficha=$("#ficha");
+const ROTEIRO=new URLSearchParams(location.search).get("roteiro")==="1";
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches||new URLSearchParams(location.search).get("motion")==="off";
+const PECAS={
+ 1:{n:"Canal",por:"Sem porteiro, qualquer pessoa que achar o bot manda nele.",como:"Entrada e saída pelo Telegram ou pelo terminal. No Telegram, mensagem de quem não está na lista de donos é ignorada.",arq:"canais/telegram.py · config: telegram_donos",
+    ex:[["me","Oi, Jarvis. Tudo pronto?"],["bot","<code>✓ id na lista de donos</code><br>Tudo pronto. Em que eu ajudo?"]]},
+ 2:{n:"Loop com freio",por:"Um agente sem limite pode ficar girando sem parar, gastando tempo e dinheiro.",como:"Pensa, pede uma ferramenta, lê o resultado e responde. No máximo 5 rodadas; depois disso responde com o que já tem.",arq:"agente/loop.py · max_rodadas = 5",
+    ex:[["bot","<code>rodada 1/5</code> vou olhar a pasta<br><code>rodada 2/5</code> li o arquivo<br><code>pronto</code> respondo agora"]]},
+ 3:{n:"Identidade",por:"Sem ela, cada conversa começa do zero e ele não sabe quem você é nem como trabalhar.",como:"Quatro arquivos de texto que você edita: <code>SOUL</code> (quem ele é), <code>AGENTS</code> (como trabalha), <code>USER</code> (quem é você) e <code>MEMORY</code> (o que lembrar desde o primeiro dia).",arq:"identidade/SOUL.md · AGENTS.md · USER.md · MEMORY.md",
+    ex:[["bot","Sou o seu Jarvis. Respondo curto, em português, e peço OK antes de mudar qualquer coisa."]]},
+ 4:{n:"Cérebro",por:"O modelo de linguagem muda toda hora; o resto do sistema não deveria mudar junto.",como:"Três opções: um modelo local (Ollama), um da nuvem (OpenRouter) ou o de teste (mock). Troca-se no config, sem mexer nas outras peças.",arq:"provedores/ollama.py · openrouter.py · mock.py",
+    ex:[["bot","<code>cérebro: local ▸ nuvem ▸ teste</code><br>Troquei o cérebro. Memória, regras e travas continuam as mesmas."]]},
+ 5:{n:"Memória",por:"Você não quer repetir a mesma informação toda semana.",como:"Banco SQLite com busca de texto: guarda sem duplicar e encontra depois, até sem acento.",arq:"memoria/store.py · SQLite + FTS5",
+    ex:[["me","lembre que o meu servidor de backup se chama Atlas"],["bot","<code>✓ guardado (#2)</code>"],["me","qual é o meu servidor de backup?"],["bot","O seu servidor de backup se chama <b>Atlas</b>."]]},
+ 6:{n:"Ferramentas",por:"Responder não basta: um assistente útil precisa fazer.",como:"Salvar e buscar memória, ler, gravar e listar arquivos (só dentro da pasta de trabalho) e rodar comandos, que passam pela trava.",arq:"ferramentas/basicas.py · plugins.py",
+    ex:[["me","leia notas.txt"],["bot","<code>ler_arquivo(notas.txt)</code><br>Reunião às 15h com o fornecedor."]]},
+ 7:{n:"Trava, aprovação e cofre",por:"Um erro do modelo não pode virar um estrago na sua máquina.",como:"Comando que só lê roda direto; qualquer outro pede o seu OK; o destrutivo é recusado sempre. Senhas ficam cifradas no cofre, e tudo vai para a auditoria.",arq:"seguranca/trava.py · aprovacao.py · cofre.py · auditoria.py",
+    ex:[["me","rode: rm -r logs"],["bot","⚠️ Esse comando muda arquivos. Posso rodar?<div class='btns'><span class='sim'>Sim, pode</span><span>Não</span></div>"],["me","rode: sudo reboot"],["bot","<code>✗ bloqueado: desligar a máquina</code>"]]},
+ 8:{n:"Caixa",por:"Se tudo falhar, o estrago fica preso dentro de uma caixa.",como:"O comando roda num contêiner Docker sem internet, que só enxerga a pasta de trabalho.",arq:"seguranca/executor.py · executor = \"caixa\"",
+    ex:[["me","rode: df -h /"],["bot","<code>[na caixa, saída 0]</code><br><code>overlay 3.7T 2.3T 1.3T 65% /</code>"]]},
+};
+let run=0;
+const wait=ms=>new Promise((r,j)=>{const id=run;setTimeout(()=>id===run?r():j("stop"),reduce?0:ms)});
+function bubble(who,html){const m=document.createElement("div");m.className="msg "+who;m.innerHTML=html;chat.appendChild(m);while(chat.children.length>5)chat.firstChild.remove();requestAnimationFrame(()=>requestAnimationFrame(()=>m.classList.add("in")));}
+function luz(p){grade.classList.remove("todas");grade.classList.toggle("foco",!!p);document.querySelectorAll(".pc").forEach(b=>b.classList.toggle("on",String(p)===b.dataset.p));
+  document.querySelectorAll(".fluxo span").forEach(s=>s.classList.toggle("on",s.dataset.f===String(p)))}
+async function mostra(p){run++;const id=run;const d=PECAS[p];luz(p);
+  ficha.classList.add("sai");await new Promise(r=>setTimeout(r,reduce?0:220));if(id!==run)return;
+  ficha.innerHTML=`<div class="eye">PEÇA ${p} DE 8</div><h2><em>${d.n}</em></h2><h3>POR QUÊ</h3><p>${d.por}</p><h3>COMO</h3><p>${d.como}</p><div class="arq">${d.arq}</div>`;
+  ficha.classList.remove("sai");chat.innerHTML="";
+  try{for(const [w,h] of d.ex){await wait(450);bubble(w,h)}}catch(e){}}
+function todas(){run++;grade.classList.remove("foco");grade.classList.add("todas");document.querySelectorAll(".pc").forEach(b=>b.classList.remove("on"));
+  document.querySelectorAll(".fluxo span").forEach(s=>s.classList.add("on"));
+  ficha.innerHTML=`<div class="eye">O CONJUNTO</div><h2>O cérebro pensa. <em>As outras sete</em> trabalham para você.</h2><h3>TROCOU O CÉREBRO?</h3><p>Memória, identidade, travas e caixa continuam iguais.</p><h3>QUEM MANDA</h3><p>Você: as regras ficam em arquivos que você edita, e o que muda algo espera o seu OK.</p>`}
+function intro(){run++;grade.classList.remove("foco","todas");document.querySelectorAll(".pc").forEach(b=>b.classList.remove("on"));chat.innerHTML="";bubble("me","Jarvis, quem é você?");setTimeout(()=>bubble("bot","Um assistente com 8 peças. Clique em cada uma para ver por que ela existe."),500)}
+window.cena=n=>{if(n==="intro")return intro();if(n==="todas")return todas();return mostra(Number(n.replace("p","")))};
+document.querySelectorAll(".pc").forEach(b=>b.addEventListener("click",()=>{auto=false;mostra(Number(b.dataset.p))}));
+let auto=!ROTEIRO;
+intro();
+if(auto){let i=0;setTimeout(function ciclo(){if(!auto)return;i=i%8+1;mostra(i);setTimeout(ciclo,6500)},3500)}
+</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<template>
+  <style>
+    @font-face { font-family: "Sora"; src: url("assets/fonts/Sora.ttf"); font-weight: 100 800; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #0c0c10; font-family: Inter, sans-serif; color: #e9e9ee; }
+    #x-tit { position: absolute; left: 110px; top: 110px; width: 1300px; font-family: "Sora"; font-size: 76px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
+    #x-tit em { font-style: normal; color: #facc15; }
+    .x-col { position: absolute; top: 340px; width: 420px; }
+    .x-col h4 { font-family: "Sora"; font-size: 30px; color: #9a9aa6; letter-spacing: 0.1em; margin-bottom: 18px; }
+    #x-id { left: 110px; } #x-mem { left: 580px; }
+    .x-arq { background: #16161e; border: 3px solid #272730; border-radius: 18px; padding: 16px 20px; margin-bottom: 16px; font-family: monospace; font-size: 34px; }
+    .x-arq small { display: block; font-family: Inter, sans-serif; font-size: 22px; color: #9a9aa6; margin-top: 4px; }
+    .x-mem { background: #1d1a0c; border: 3px solid #4a4220; border-radius: 18px; padding: 16px 20px; margin-bottom: 16px; font-size: 31px; line-height: 1.3; }
+    #x-ctx { position: absolute; left: 1080px; top: 330px; width: 430px; height: 330px; border: 4px solid #facc15; border-radius: 30px; background: #1a160a; padding: 28px; }
+    #x-ctx b { display: block; font-family: "Sora"; font-size: 40px; color: #facc15; }
+    #x-ctx p { margin-top: 14px; font-size: 28px; line-height: 1.35; color: #e9e9ee; }
+    #x-ctx .perg { margin-top: 18px; background: #2b5278; border-radius: 18px 18px 6px 18px; padding: 14px 18px; font-size: 27px; }
+    #x-seta { position: absolute; left: 1020px; top: 470px; font-size: 60px; color: #facc15; }
+  </style>
+  <div id="root" data-composition-id="contexto" data-width="1920" data-height="1080">
+    <p id="x-tit">Antes de pensar, <em>ele lembra de você.</em></p>
+    <div class="x-col" id="x-id"><h4>IDENTIDADE</h4>
+      <div class="x-arq" id="a1">SOUL.md<small>quem ele é</small></div>
+      <div class="x-arq" id="a2">AGENTS.md<small>como trabalha</small></div>
+      <div class="x-arq" id="a3">USER.md<small>quem é você</small></div>
+    </div>
+    <div class="x-col" id="x-mem"><h4>MEMÓRIA</h4>
+      <div class="x-mem" id="m1">o servidor de backup se chama Atlas</div>
+      <div class="x-mem" id="m2">prefere respostas curtas</div>
+    </div>
+    <div id="x-seta">→</div>
+    <div id="x-ctx"><b>Contexto</b><p>identidade + memórias que casam + a conversa</p><div class="perg">Apaga a pasta de logs antigos.</div></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#x-tit", { opacity: 0, y: -30 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 0);
+    tl.fromTo("#x-ctx", { opacity: 0, scale: 0.92 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(1.8)" }, 0.2);
+    tl.fromTo(["#x-id h4", "#a1", "#a2", "#a3"], { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.3, stagger: 0.15, ease: "power3.out" }, 3.46);
+    tl.fromTo(["#x-mem h4", "#m1", "#m2"], { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.3, stagger: 0.15, ease: "power3.out" }, 4.36);
+    tl.fromTo("#x-seta", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.3 }, 5.38);
+    tl.to("#x-ctx", { boxShadow: "0 0 60px 10px rgba(250,204,21,0.35)", duration: 0.4, yoyo: true, repeat: 1 }, 5.38);
+    window.__timelines["contexto"] = tl;
+  </script>
+</template>
