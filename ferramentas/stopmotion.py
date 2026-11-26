@@ -4,7 +4,7 @@
 uso: stopmotion.py <pasta-quadros> <spec.json> <palavras.json> <total> <capa.png> <cta.png> <saida.mp4>
 spec.json: {"ancoras": {...frases...}, "marcas": {"m1-legenda": "A_eu", ...}, "cta": "A_cta"}
 - capa de 0 até a 1ª marca; cada marca cai no tempo da sua âncora; os quadros entre duas marcas
-  se espalham por igual (a digitação acompanha a fala); o último quadro segura até o CTA.
+  se espalham por igual (a digitaçêo acompanha a fala); o último quadro segura até o CTA.
 """
 import json, os, subprocess, sys
 sys.path.insert(0, os.path.dirname(__file__))

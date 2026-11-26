@@ -2,10 +2,10 @@
 """Casa a fala do avatar com as cenas.
 
 palavras.json = [{"w": "Você", "ini": 0.12, "fim": 0.40}, ...] (Whisper com tempo por palavra)
-spec.json     = {"ancoras": {"A_msg": "Você manda", ...}, ...}   (frases, na ordem em que são faladas)
+spec.json     = {"ancoras": {"A_msg": "Você manda", ...}, ...}   (frases, na ordem em que sêo faladas)
 
 ancoras(palavras, frases) -> {"A_msg": 3.21, ...}  (início da 1ª palavra de cada frase)
-A busca anda só para frente, então frases repetidas casam na ordem certa.
+A busca anda só para frente, entêo frases repetidas casam na ordem certa.
 """
 import json, re, sys, unicodedata
 
@@ -49,7 +49,7 @@ def ancoras(palavras, frases):
                 achou = i
                 break
         if achou is None:   # tolerância: 1ª palavra que bate o começo da frase
-            raise SystemExit(f"âncora não achada: {nome} = '{frase}' (a partir da palavra {pos}: {' '.join(ws[pos:pos+12])})")
+            raise SystemExit(f"âncora nêo achada: {nome} = '{frase}' (a partir da palavra {pos}: {' '.join(ws[pos:pos+12])})")
         out[nome] = round(palavras[idx[achou]]["ini"], 3)
         pos = achou + 1
     return out

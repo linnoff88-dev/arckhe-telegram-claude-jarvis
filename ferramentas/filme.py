@@ -4,7 +4,7 @@
 uso: filme.py <projeto> <spec.json> <palavras.json> <duracao_total>
 - lê tpl/<cena>.html, troca {{var}} pelo tempo RELATIVO ao início da cena e grava compositions/<cena>.html
 - grava index.html com as cenas (data-start/data-duration) e os SFX (sem trilha: a trilha entra na mixagem final)
-Expressões do spec usam as âncoras (A_*), END (duração total) e ini/fim da cena.
+Expressões do spec usam as âncoras (A_*), END (duraçêo total) e ini/fim da cena.
 """
 import json, os, re, sys
 sys.path.insert(0, os.path.dirname(__file__))

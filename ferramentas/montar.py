@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Monta os 6 vídeos narrados quando o avatar existe: transcrição → visual no tempo da fala → avatar + voz + trilha.
+"""Monta os 6 vídeos narrados quando o avatar existe: transcriçêo → visual no tempo da fala → avatar + voz + trilha.
 
 uso: montar.py <id> [<id>...]   ids: 1a 2a 3a 1b 2b 3b   (ou "todos")
-Saída: entrega/<id>.mp4 + entrega/<id>.json (âncoras, t_meia, duração)
+Saída: entrega/<id>.mp4 + entrega/<id>.json (âncoras, t_meia, duraçêo)
 """
 import json, os, subprocess, sys
 R = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

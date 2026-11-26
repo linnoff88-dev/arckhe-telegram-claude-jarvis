@@ -94,8 +94,8 @@ async function puxa(){
   const r=await fetch("/api/estado?desde="+visto).then(r=>r.json());
   for(const e of r.eventos){visto=e.n+1;fila.push(e)}
   if(r.pendente&&!document.getElementById("okq")){const d=msg("bot","⚠️ Esse comando muda arquivos: "+r.pendente+"\nPosso rodar?");d.id="okq";
-    const b=document.createElement("div");b.className="ok-box";b.innerHTML='<button class="sim" id="bSim">Sim, pode</button><button id="bNao">Não</button>';d.insertBefore(b,d.lastChild);
-    b.onclick=async ev=>{const sim=ev.target.id==="bSim";b.remove();d.removeAttribute("id");msg("me",sim?"Sim, pode":"Não");
+    const b=document.createElement("div");b.className="ok-box";b.innerHTML='<button class="sim" id="bSim">Sim, pode</button><button id="bNao">Nêo</button>';d.insertBefore(b,d.lastChild);
+    b.onclick=async ev=>{const sim=ev.target.id==="bSim";b.remove();d.removeAttribute("id");msg("me",sim?"Sim, pode":"Nêo");
       await fetch("/api/aprova",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({sim})})}}
 }
 setInterval(puxa,150);

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Peça animada no tempo da fala: capa → gravação da página (cenas nas âncoras) → CTA.
+"""Peça animada no tempo da fala: capa → gravaçêo da página (cenas nas âncoras) → CTA.
 
 uso: pagina.py <pagina.html> <spec.json> <palavras.json> <total> <capa.png> <cta.png> <saida.mp4>
 spec.json: {"ancoras": {...}, "inicio": "A_x", "cenas": [["A_x", "todos"], ["A_tg - 0.3", "nTg"], ...], "cta": "A_cta"}
@@ -19,7 +19,7 @@ tmp = tempfile.mkdtemp(prefix="pagina-", dir=os.path.dirname(os.path.abspath(sai
 json.dump(rot, open(f"{tmp}/roteiro.json", "w"))
 grav = f"{tmp}/gravacao.mp4"
 subprocess.run(["node", os.path.join(os.path.dirname(__file__), "gravar-pagina.cjs"), pagina, f"{tmp}/roteiro.json", grav], check=True)
-# capa (0 → início) + gravação + CTA (até o fim)
+# capa (0 → início) + gravaçêo + CTA (até o fim)
 fc = (f"[0:v]scale=1920:1080,fps=30,format=yuv420p,trim=duration={ini:.3f}[a];"
       f"[1:v]fps=30,format=yuv420p,setpts=PTS-STARTPTS[b];"
       f"[2:v]scale=1920:1080,fps=30,format=yuv420p,trim=duration={total - t_cta:.3f}[c];[a][b][c]concat=n=3:v=1:a=0[v]")

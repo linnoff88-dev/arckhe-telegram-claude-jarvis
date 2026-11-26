@@ -87,10 +87,10 @@ svg.wires path{fill:none;stroke:#2f2f3a;stroke-width:2;stroke-dasharray:5 6}
 <h1>Telegram como <mark>controle remoto</mark> do Claude Code</h1>
 <p class="sub">Você manda a mensagem no celular. O bot confere se é você e repassa. O Claude Code, rodando no seu servidor, pensa, executa e responde no mesmo chat.</p>
 
-<div class="tabs" role="group" aria-label="Escolha a demonstração">
+<div class="tabs" role="group" aria-label="Escolha a demonstraçêo">
   <button data-c="pergunta" aria-pressed="true">1 · Responde uma pergunta</button>
   <button data-c="executa" aria-pressed="false">2 · Executa no servidor</button>
-  <button data-c="aprova" aria-pressed="false">3 · Pede aprovação antes</button>
+  <button data-c="aprova" aria-pressed="false">3 · Pede aprovaçêo antes</button>
 </div>
 
 <div class="stage">
@@ -116,13 +116,13 @@ svg.wires path{fill:none;stroke:#2f2f3a;stroke-width:2;stroke-dasharray:5 6}
     <div class="pkt" id="pkt"></div>
   </div>
 </div>
-<p class="note">Demonstração animada do conceito (Opção 1). Os textos e números são ilustrativos. · <a href="?motion=off">ver parado</a></p>
+<p class="note">Demonstraçêo animada do conceito (Opçêo 1). Os textos e números sêo ilustrativos. · <a href="?motion=off">ver parado</a></p>
 
 <script>
 const $=s=>document.querySelector(s);
 const chat=$("#chat"),typ=$("#typ"),term=$("#term"),pkt=$("#pkt"),st=$("#st");
 const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches||new URLSearchParams(location.search).get("motion")==="off";
-// posição do centro de cada nó dentro do .flow
+// posiçêo do centro de cada nó dentro do .flow
 const P={tg:[105,90],bot:[395,90],cl:[395,360],vps:[125,360]};
 const ROTEIRO=new URLSearchParams(location.search).get("roteiro")==="1";
 let run=0,visible=true,currentCase="pergunta",userTouched=false;
@@ -157,14 +157,14 @@ const CASES={
  async aprova(){
   step(1);on("#nTg");await typeIn("Apaga os logs com mais de 30 dias.");bubble("me","Apaga os logs com mais de 30 dias.");
   await fly("tg","bot");step(2);on("#nBot");tag("#gBot","✓ usuário autorizado");await wait(500);
-  await fly("bot","cl");step(3);on("#nCl");tag("#gCl","ação que apaga → pedir OK");await wait(900);on("#nCl","warn");
+  await fly("bot","cl");step(3);on("#nCl");tag("#gCl","açêo que apaga → pedir OK");await wait(900);on("#nCl","warn");
   await fly("cl","bot",true);await fly("bot","tg",true,550);on("#nTg");
-  const m=bubble("bot","⚠️ Isso <b>apaga arquivos</b>: 12 logs antigos, 4,6 MB. Confirma?<div class='btns'><span id='bS'>Sim, apagar</span><span>Não</span></div>");
+  const m=bubble("bot","⚠️ Isso <b>apaga arquivos</b>: 12 logs antigos, 4,6 MB. Confirma?<div class='btns'><span id='bS'>Sim, apagar</span><span>Nêo</span></div>");
   await wait(1500);const b=m.querySelector("#bS");b.classList.add("hit");await wait(400);bubble("me","Sim, apagar");
-  await fly("tg","bot");tag("#gBot","✓ aprovação recebida");await fly("bot","cl");on("#nCl");tag("#gCl","executando");
+  await fly("tg","bot");tag("#gBot","✓ aprovaçêo recebida");await fly("bot","cl");on("#nCl");tag("#gCl","executando");
   await fly("cl","vps");step(4);on("#nVps");await termType(["$ find logs -mtime +30 -delete","12 arquivos removidos","4,6M liberados"]);
   await fly("vps","cl",true);step(5);await fly("cl","bot",true);await fly("bot","tg",true,550);on("#nTg");
-  bubble("bot","✓ Feito. Apaguei <b>12 logs</b> e liberei <b>4,6 MB</b>. Registrei a ação no histórico.");$("#nTg").classList.add("ok");await wait(2800)}
+  bubble("bot","✓ Feito. Apaguei <b>12 logs</b> e liberei <b>4,6 MB</b>. Registrei a açêo no histórico.");$("#nTg").classList.add("ok");await wait(2800)}
 };
 function finalState(c){reset();
  if(c==="pergunta"){bubble("me","O que é um webhook? Explica curto.");bubble("bot","É um <b>aviso automático</b>: quando algo acontece num sistema, ele chama um endereço seu na hora.")}

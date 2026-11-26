@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ponte de demonstração (Opção 1): chat estilo Telegram -> bot -> Claude Code real (claude -p).
+"""Ponte de demonstraçêo (Opçêo 1): chat estilo Telegram -> bot -> Claude Code real (claude -p).
 
 Roda só em 127.0.0.1. O "bot" confere o usuário (lista fixa), repassa o texto ao
 `claude -p` pela assinatura, com ferramentas limitadas, e devolve a resposta + os
@@ -16,10 +16,10 @@ AUTORIZADOS = {"nei"}  # no bot real: o ID numérico do Telegram
 SESSAO = {"id": None}
 
 REGRAS = (
-    "Você é o Claude Code atendendo pelo Telegram (demonstração). Responda em português do Brasil, "
+    "Você é o Claude Code atendendo pelo Telegram (demonstraçêo). Responda em português do Brasil, "
     "curto (até 3 frases), sem markdown pesado. Você está na pasta sandbox/ de um servidor. "
     "Pode usar o terminal para olhar o sistema (df, ls, du, find, uptime). "
-    "REGRA: antes de qualquer ação que apaga, altera, paga ou envia algo para fora, NÃO execute: "
+    "REGRA: antes de qualquer açêo que apaga, altera, paga ou envia algo para fora, NêO execute: "
     "diga exatamente o que faria (quantos arquivos, quanto espaço) e pergunte 'Confirma?'. "
     "Só execute depois que o usuário responder sim."
 )

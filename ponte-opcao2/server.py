@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Ponte de demonstração (Opção 2): chat estilo Telegram -> INTELECTO v2 de verdade (as 8 peças).
+"""Ponte de demonstraçêo (Opçêo 2): chat estilo Telegram -> INTELECTO v2 de verdade (as 8 peças).
 
-O cérebro é o `mock` do próprio intelecto (sem rede, sem modelo): as outras 7 peças são as reais
-(canal com lista de donos, loop com freio, identidade, memória SQLite, ferramentas, trava/aprovação
+O cérebro é o `mock` do próprio intelecto (sem rede, sem modelo): as outras 7 peças sêo as reais
+(canal com lista de donos, loop com freio, identidade, memória SQLite, ferramentas, trava/aprovaçêo
 com auditoria e a caixa Docker sem rede). Cada peça avisa quando age, e a tela acende a peça.
 Uso: python3 server.py [porta]   (só 127.0.0.1)
 """

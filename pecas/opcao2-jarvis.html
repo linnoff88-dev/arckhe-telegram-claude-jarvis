@@ -96,7 +96,7 @@ h1 mark{background:none;color:var(--amb)}
       <div class="faixa">o que ele sabe e o que ele faz <span></span> e o que o segura</div>
       <button class="pc" data-p="5"><span class="num">5</span><b>Memória</b><small>guarda e acha, até sem acento</small><code>memoria/store.py</code></button>
       <button class="pc" data-p="6"><span class="num">6</span><b>Ferramentas</b><small>memória, arquivos, comando</small><code>ferramentas/basicas.py</code></button>
-      <button class="pc" data-p="7"><span class="num">7</span><b>Trava e cofre</b><small>lê passa · muda pede OK · destrói, não</small><code>seguranca/</code></button>
+      <button class="pc" data-p="7"><span class="num">7</span><b>Trava e cofre</b><small>lê passa · muda pede OK · destrói, nêo</small><code>seguranca/</code></button>
       <button class="pc" data-p="8"><span class="num">8</span><b>Caixa</b><small>Docker sem internet</small><code>seguranca/executor.py</code></button>
     </div>
     <div class="fluxo" id="fluxo"><span data-f="1">Telegram</span><i>→</i><span data-f="3">identidade + memória</span><i>→</i><span data-f="4">cérebro</span><i>→</i><span data-f="7">trava</span><i>→</i><span data-f="8">caixa</span><i>→</i><span data-f="1">resposta no chat</span></div>
@@ -111,27 +111,27 @@ h1 mark{background:none;color:var(--amb)}
     </div>
   </aside>
 </div>
-<p class="nota">Peças do INTELECTO v2 (código aberto). Exemplos no celular são ilustrativos; a demonstração real roda o próprio Intelecto.</p>
+<p class="nota">Peças do INTELECTO v2 (código aberto). Exemplos no celular sêo ilustrativos; a demonstraçêo real roda o próprio Intelecto.</p>
 
 <script>
 const $=s=>document.querySelector(s),chat=$("#chat"),grade=$("#grade"),ficha=$("#ficha");
 const ROTEIRO=new URLSearchParams(location.search).get("roteiro")==="1";
 const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches||new URLSearchParams(location.search).get("motion")==="off";
 const PECAS={
- 1:{n:"Canal",por:"Sem porteiro, qualquer pessoa que achar o bot manda nele.",como:"Entrada e saída pelo Telegram ou pelo terminal. No Telegram, mensagem de quem não está na lista de donos é ignorada.",arq:"canais/telegram.py · config: telegram_donos",
+ 1:{n:"Canal",por:"Sem porteiro, qualquer pessoa que achar o bot manda nele.",como:"Entrada e saída pelo Telegram ou pelo terminal. No Telegram, mensagem de quem nêo está na lista de donos é ignorada.",arq:"canais/telegram.py · config: telegram_donos",
     ex:[["me","Oi, Jarvis. Tudo pronto?"],["bot","<code>✓ id na lista de donos</code><br>Tudo pronto. Em que eu ajudo?"]]},
  2:{n:"Loop com freio",por:"Um agente sem limite pode ficar girando sem parar, gastando tempo e dinheiro.",como:"Pensa, pede uma ferramenta, lê o resultado e responde. No máximo 5 rodadas; depois disso responde com o que já tem.",arq:"agente/loop.py · max_rodadas = 5",
     ex:[["bot","<code>rodada 1/5</code> vou olhar a pasta<br><code>rodada 2/5</code> li o arquivo<br><code>pronto</code> respondo agora"]]},
- 3:{n:"Identidade",por:"Sem ela, cada conversa começa do zero e ele não sabe quem você é nem como trabalhar.",como:"Quatro arquivos de texto que você edita: <code>SOUL</code> (quem ele é), <code>AGENTS</code> (como trabalha), <code>USER</code> (quem é você) e <code>MEMORY</code> (o que lembrar desde o primeiro dia).",arq:"identidade/SOUL.md · AGENTS.md · USER.md · MEMORY.md",
+ 3:{n:"Identidade",por:"Sem ela, cada conversa começa do zero e ele nêo sabe quem você é nem como trabalhar.",como:"Quatro arquivos de texto que você edita: <code>SOUL</code> (quem ele é), <code>AGENTS</code> (como trabalha), <code>USER</code> (quem é você) e <code>MEMORY</code> (o que lembrar desde o primeiro dia).",arq:"identidade/SOUL.md · AGENTS.md · USER.md · MEMORY.md",
     ex:[["bot","Sou o seu Jarvis. Respondo curto, em português, e peço OK antes de mudar qualquer coisa."]]},
- 4:{n:"Cérebro",por:"O modelo de linguagem muda toda hora; o resto do sistema não deveria mudar junto.",como:"Três opções: um modelo local (Ollama), um da nuvem (OpenRouter) ou o de teste (mock). Troca-se no config, sem mexer nas outras peças.",arq:"provedores/ollama.py · openrouter.py · mock.py",
+ 4:{n:"Cérebro",por:"O modelo de linguagem muda toda hora; o resto do sistema nêo deveria mudar junto.",como:"Três opções: um modelo local (Ollama), um da nuvem (OpenRouter) ou o de teste (mock). Troca-se no config, sem mexer nas outras peças.",arq:"provedores/ollama.py · openrouter.py · mock.py",
     ex:[["bot","<code>cérebro: local ▸ nuvem ▸ teste</code><br>Troquei o cérebro. Memória, regras e travas continuam as mesmas."]]},
- 5:{n:"Memória",por:"Você não quer repetir a mesma informação toda semana.",como:"Banco SQLite com busca de texto: guarda sem duplicar e encontra depois, até sem acento.",arq:"memoria/store.py · SQLite + FTS5",
+ 5:{n:"Memória",por:"Você nêo quer repetir a mesma informaçêo toda semana.",como:"Banco SQLite com busca de texto: guarda sem duplicar e encontra depois, até sem acento.",arq:"memoria/store.py · SQLite + FTS5",
     ex:[["me","lembre que o meu servidor de backup se chama Atlas"],["bot","<code>✓ guardado (#2)</code>"],["me","qual é o meu servidor de backup?"],["bot","O seu servidor de backup se chama <b>Atlas</b>."]]},
- 6:{n:"Ferramentas",por:"Responder não basta: um assistente útil precisa fazer.",como:"Salvar e buscar memória, ler, gravar e listar arquivos (só dentro da pasta de trabalho) e rodar comandos, que passam pela trava.",arq:"ferramentas/basicas.py · plugins.py",
-    ex:[["me","leia notas.txt"],["bot","<code>ler_arquivo(notas.txt)</code><br>Reunião às 15h com o fornecedor."]]},
- 7:{n:"Trava, aprovação e cofre",por:"Um erro do modelo não pode virar um estrago na sua máquina.",como:"Comando que só lê roda direto; qualquer outro pede o seu OK; o destrutivo é recusado sempre. Senhas ficam cifradas no cofre, e tudo vai para a auditoria.",arq:"seguranca/trava.py · aprovacao.py · cofre.py · auditoria.py",
-    ex:[["me","rode: rm -r logs"],["bot","⚠️ Esse comando muda arquivos. Posso rodar?<div class='btns'><span class='sim'>Sim, pode</span><span>Não</span></div>"],["me","rode: sudo reboot"],["bot","<code>✗ bloqueado: desligar a máquina</code>"]]},
+ 6:{n:"Ferramentas",por:"Responder nêo basta: um assistente útil precisa fazer.",como:"Salvar e buscar memória, ler, gravar e listar arquivos (só dentro da pasta de trabalho) e rodar comandos, que passam pela trava.",arq:"ferramentas/basicas.py · plugins.py",
+    ex:[["me","leia notas.txt"],["bot","<code>ler_arquivo(notas.txt)</code><br>Reuniêo às 15h com o fornecedor."]]},
+ 7:{n:"Trava, aprovaçêo e cofre",por:"Um erro do modelo nêo pode virar um estrago na sua máquina.",como:"Comando que só lê roda direto; qualquer outro pede o seu OK; o destrutivo é recusado sempre. Senhas ficam cifradas no cofre, e tudo vai para a auditoria.",arq:"seguranca/trava.py · aprovacao.py · cofre.py · auditoria.py",
+    ex:[["me","rode: rm -r logs"],["bot","⚠️ Esse comando muda arquivos. Posso rodar?<div class='btns'><span class='sim'>Sim, pode</span><span>Nêo</span></div>"],["me","rode: sudo reboot"],["bot","<code>✗ bloqueado: desligar a máquina</code>"]]},
  8:{n:"Caixa",por:"Se tudo falhar, o estrago fica preso dentro de uma caixa.",como:"O comando roda num contêiner Docker sem internet, que só enxerga a pasta de trabalho.",arq:"seguranca/executor.py · executor = \"caixa\"",
     ex:[["me","rode: df -h /"],["bot","<code>[na caixa, saída 0]</code><br><code>overlay 3.7T 2.3T 1.3T 65% /</code>"]]},
 };
