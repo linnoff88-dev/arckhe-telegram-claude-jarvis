@@ -30,8 +30,8 @@ def palavras(i):
     td = f"{R}/montagem/{i}/transcricao"
     os.makedirs(td, exist_ok=True)
     run(os.path.expanduser("~/projetos/wifi/scripts/fila-vaga"), "gpu", f"tcj-whisper-{i}", "--",
-        os.path.expanduser("~/projetos/inemavox/venv/bin/python"), "transcrever_v1.py", "--in", av, "--outdir", td,
-        "--whisper-model", "large-v3", "--src", "pt", "--words", cwd=os.path.expanduser("~/projetos/inemavox"))
+        os.path.expanduser("~/projetos/ARCKHÉvox/venv/bin/python"), "transcrever_v1.py", "--in", av, "--outdir", td,
+        "--whisper-model", "large-v3", "--src", "pt", "--words", cwd=os.path.expanduser("~/projetos/ARCKHÉvox"))
     ws = json.load(open(f"{td}/words.json"))
     json.dump([{"w": w["word"], "ini": w["start"], "fim": w["end"]} for w in ws], open(out, "w"), ensure_ascii=False, indent=0)
     return out

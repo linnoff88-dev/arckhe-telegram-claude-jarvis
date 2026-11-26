@@ -29,7 +29,7 @@ def igual(a, b):
 
 
 def ancoras(palavras, frases):
-    # o Whisper às vezes junta palavras numa só ("inema.club") ou separa; a busca é por palavra normalizada
+    # o Whisper às vezes junta palavras numa só ("ARCKHÉ AI") ou separa; a busca é por palavra normalizada
     ws = []
     idx = []
     for n, p in enumerate(palavras):

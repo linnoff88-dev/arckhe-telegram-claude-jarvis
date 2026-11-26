@@ -47,7 +47,7 @@ html = f'''<!doctype html>
     </style>
   </head>
   <body>
-    <!-- Gerado por tools/filme.py no tempo da fala do avatar. Canto de baixo à direita livre para o avatar (PiP). Sem whoosh (regra INEMA). -->
+    <!-- Gerado por tools/filme.py no tempo da fala do avatar. Canto de baixo à direita livre para o avatar (PiP). Sem whoosh (regra ARCKHÉ). -->
     <div id="root" data-composition-id="main" data-start="0" data-duration="{total}" data-width="1920" data-height="1080">
 {chr(10).join(cenas_html)}
 {chr(10).join(sfx_html)}

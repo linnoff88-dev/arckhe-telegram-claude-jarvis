@@ -6,7 +6,7 @@
 </div>
 
 
-[![Seu Jarvis no Telegram](guia/assets/banner.jpg)](https://inematds.github.io/telegram-claude-jarvis/guia/)
+[![Seu Jarvis no Telegram](guia/assets/banner.jpg)](https://linnoff88-dev.github.io/arckhe-/guia/)
 
 **ê°Å¸â¡Â§ê°Å¸â¡Â· [PortuguêÂªs](README.md) êÂ· ê°Å¸â¡Âºê°Å¸â¡Â¸ [English](README.en.md) êÂ· ê°Å¸â¡Âªê°Å¸â¡Â¸ [EspaêÂ±ol](README.es.md)**
 
@@ -16,14 +16,14 @@ Aqui vocêÂª vêÂª dois jeitos de conversar pelo Telegram com uma IA que
 
 ## ê°Å¸ââ Guia de uso
 
-Guia completo (landing + passo a passo): **https://inematds.github.io/telegram-claude-jarvis/guia/**
+Guia completo (landing + passo a passo): **https://linnoff88-dev.github.io/arckhe-/guia/**
 
 ## Como comeêÂ§ar (sem instalar nada êÂ  mêÂ£o)
 
 Abra o Claude Code ou o Codex no computador onde a IA vai trabalhar e cole:
 
 ```text
-Leia o projeto "Seu Jarvis no Telegram" em https://github.com/inematds/telegram-claude-jarvis (o README explica tudo, inclusive a instalaêÂ§êÂ£o).
+Leia o projeto "Seu Jarvis no Telegram" em https://github.com/linnoff88-dev/telegram-claude-jarvis (o README explica tudo, inclusive a instalaêÂ§êÂ£o).
 Quero conversar pelo Telegram com uma IA que trabalha neste computador.
 Me responda em portuguêÂªs simples:
 1. Qual das duas opêÂ§êÂµes faz sentido para mim agora: o controle remoto do Claude Code ou o Jarvis do Intelecto? Por quêÂª?
@@ -50,7 +50,7 @@ NêÂ£o instale nem mude nada ainda. Mostre o plano e espere eu dizer sim.
 
 - Python 3.10+ e Node 18+ (Playwright, sêÂ³ para gravar as demonstraêÂ§êÂµes).
 - **OpêÂ§êÂ£o 1:** Claude Code instalado e logado pela assinatura (`claude -p` funcionando).
-- **OpêÂ§êÂ£o 2:** o [Intelecto v2](https://github.com/inematds/intelecto-v2) baixado (`git clone https://github.com/inematds/intelecto-v2 ~/projetos/intelecto-v2`; outro lugar ê¢â â variêÂ¡vel `INTELECTO_V2`) e Docker com a imagem `python:3.12-slim` (`docker pull python:3.12-slim`), que êÂ© a "caixa".
+- **OpêÂ§êÂ£o 2:** o [Intelecto v2](https://github.com/linnoff88-dev/intelecto-v2) baixado (`git clone https://github.com/linnoff88-dev/intelecto-v2 ~/projetos/intelecto-v2`; outro lugar ê¢â â variêÂ¡vel `INTELECTO_V2`) e Docker com a imagem `python:3.12-slim` (`docker pull python:3.12-slim`), que êÂ© a "caixa".
 
 ### Arquivos
 
@@ -67,7 +67,7 @@ NêÂ£o instale nem mude nada ainda. Mostre o plano e espere eu dizer sim.
 ### Rodar as demonstraêÂ§êÂµes
 
 ```bash
-git clone https://github.com/inematds/telegram-claude-jarvis && cd telegram-claude-jarvis
+git clone https://github.com/linnoff88-dev/telegram-claude-jarvis && cd telegram-claude-jarvis
 
 # OpêÂ§êÂ£o 1 ê¢â¬â Claude Code de verdade (assinatura)
 (cd ponte-opcao1 && ./preparar-sandbox.sh && python3 server.py 8794)
@@ -89,14 +89,14 @@ Ligar no Telegram de verdade:
 | 1 | Falas dos 6 vêÂ­deos (chamada D20, uma linha, sem "IAs") | `falas/*.txt` | ê°Å¸Â§Â  sessêÂ£o com o Nei |
 | 2 | Avatar no estêÂºdio HeyGen (pela assinatura) | `node explicavideos/engine/heygen-studio.mjs --titulo tcj-<id> --fala-arquivo <txt> --template TEMPLATE-AVATAR16` | ê¢Å¡â¢ê¯Â¸Â script |
 | 3 | Baixar o avatar (API de leitura) | `node explicavideos/engine/heygen-estudio-baixar.mjs --id <id> --saida <mp4>` | ê¢Å¡â¢ê¯Â¸Â script |
-| 4 | Tempo de cada palavra da fala | Whisper local (inemavox) ê¢â â `palavras.json` | ê¢Å¡â¢ê¯Â¸Â script |
+| 4 | Tempo de cada palavra da fala | Whisper local (ARCKHÉvox) ê¢â â `palavras.json` | ê¢Å¡â¢ê¯Â¸Â script |
 | 5 | Demos reais quadro a quadro | `node ferramentas/capturar-real.cjs <porta> a\|b <pasta>` | ê¢Å¡â¢ê¯Â¸Â script (a resposta vem do ê°Å¸Â¤â `claude -p` na OpêÂ§êÂ£o 1) |
 | 6 | Demos reais no tempo da fala | `python3 ferramentas/stopmotion.py <quadros> <spec> <palavras> <dur> <capa> <cta> <saida>` | ê¢Å¡â¢ê¯Â¸Â script |
 | 7 | PeêÂ§as animadas no tempo da fala | `node ferramentas/gravar-pagina.cjs <pagina> <roteiro.json> <saida>` | ê¢Å¡â¢ê¯Â¸Â script |
 | 8 | Filmes no tempo da fala | `python3 ferramentas/filme.py filmes/opcaoN spec.json <palavras> <dur>` + `npx hyperframes@0.8.77 check` + `render` | ê¢Å¡â¢ê¯Â¸Â script |
 | 9 | Juntar avatar (meia tela ê¢â â canto), voz e trilha | `python3 ferramentas/compor.py <visual> <avatar> <t_meia> dir\|esq <saida>` | ê¢Å¡â¢ê¯Â¸Â script |
 | 10 | RevisêÂ£o independente do guia e dos vêÂ­deos | revisor novo pelo runbook | ê°Å¸Â¤â revisor |
-| 11 | Guia no Pages, portal, têÂ³pico no INEMA.VIBE e vêÂ­deos no lives3 (1 h entre eles) | `git push`, `atualiza-portal`, `postar-telegram`, fila do yt-pub-x3 | ê°Å¸Â§Â  sessêÂ£o com o Nei |
+| 11 | Guia no Pages, portal, têÂ³pico no ARCKHÉ.VIBE e vêÂ­deos no lives3 (1 h entre eles) | `git push`, `atualiza-portal`, `postar-telegram`, fila do yt-pub-x3 | ê°Å¸Â§Â  sessêÂ£o com o Nei |
 
 ### Limites conhecidos
 
@@ -106,7 +106,7 @@ Ligar no Telegram de verdade:
 
 ## LicenêÂ§a
 
-MIT. GrêÂ¡tis no [inema.club](https://inema.club), direto na internet.
+MIT. GrêÂ¡tis no [ARCKHÉ AI](https://ARCKHÉ AI), direto na internet.
 
 ---
 

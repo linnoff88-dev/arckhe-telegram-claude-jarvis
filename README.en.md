@@ -1,6 +1,6 @@
 # Your Jarvis on Telegram
 
-[![Your Jarvis on Telegram](guia/assets/banner-en.jpg)](https://inematds.github.io/telegram-claude-jarvis/guia/en/)
+[![Your Jarvis on Telegram](guia/assets/banner-en.jpg)](https://linnoff88-dev.github.io/arckhe-/guia/en/)
 
 **🇧🇷 [Português](README.md) · 🇺🇸 [English](README.en.md) · 🇪🇸 [Español](README.es.md)**
 
@@ -10,14 +10,14 @@ Here you’ll find two ways to talk through Telegram with an AI that runs on you
 
 ## 📖 User guide
 
-Complete guide (landing page + walkthrough): **https://inematds.github.io/telegram-claude-jarvis/guia/en/**
+Complete guide (landing page + walkthrough): **https://linnoff88-dev.github.io/arckhe-/guia/en/**
 
 ## Getting started (no manual installation)
 
 Open Claude Code or Codex on the computer where the AI will work, then paste:
 
 ```text
-Read the project "Your Jarvis on Telegram" at https://github.com/inematds/telegram-claude-jarvis (the README explains everything, including installation).
+Read the project "Your Jarvis on Telegram" at https://github.com/linnoff88-dev/telegram-claude-jarvis (the README explains everything, including installation).
 I want to talk through Telegram with an AI that works on this computer.
 Answer me in simple English:
 1. Which option makes sense for me right now: Claude Code remote control or Jarvis do Intelecto? Why?
@@ -44,7 +44,7 @@ Don’t install or change anything yet. Show me the plan and wait for me to say 
 
 - Python 3.10+ and Node 18+ (Playwright, only for recording the demos).
 - **Option 1:** Claude Code installed and signed in through your subscription (`claude -p` working).
-- **Option 2:** [Intelecto v2](https://github.com/inematds/intelecto-v2) downloaded (`git clone https://github.com/inematds/intelecto-v2 ~/projetos/intelecto-v2`; elsewhere → `INTELECTO_V2` variable) and Docker with the `python:3.12-slim` image (`docker pull python:3.12-slim`), which is the “sandbox.”
+- **Option 2:** [Intelecto v2](https://github.com/linnoff88-dev/intelecto-v2) downloaded (`git clone https://github.com/linnoff88-dev/intelecto-v2 ~/projetos/intelecto-v2`; elsewhere → `INTELECTO_V2` variable) and Docker with the `python:3.12-slim` image (`docker pull python:3.12-slim`), which is the “sandbox.”
 
 ### Files
 
@@ -61,7 +61,7 @@ Don’t install or change anything yet. Show me the plan and wait for me to say 
 ### Run the demos
 
 ```bash
-git clone https://github.com/inematds/telegram-claude-jarvis && cd telegram-claude-jarvis
+git clone https://github.com/linnoff88-dev/telegram-claude-jarvis && cd telegram-claude-jarvis
 
 # Option 1 — real Claude Code (subscription)
 (cd ponte-opcao1 && ./preparar-sandbox.sh && python3 server.py 8794)
@@ -83,14 +83,14 @@ Connect to the real Telegram:
 | 1 | Scripts for the 6 videos (D20 call, one line, no “AIs”) | `falas/*.txt` | 🧠 session with Nei |
 | 2 | Avatar in the HeyGen studio (subscription) | `node explicavideos/engine/heygen-studio.mjs --titulo tcj-<id> --fala-arquivo <txt> --template TEMPLATE-AVATAR16` | ⚙️ script |
 | 3 | Download the avatar (read-only API) | `node explicavideos/engine/heygen-estudio-baixar.mjs --id <id> --saida <mp4>` | ⚙️ script |
-| 4 | Timing for each word in the speech | Local Whisper (inemavox) → `palavras.json` | ⚙️ script |
+| 4 | Timing for each word in the speech | Local Whisper (ARCKHÉvox) → `palavras.json` | ⚙️ script |
 | 5 | Real demos, frame by frame | `node ferramentas/capturar-real.cjs <porta> a\|b <pasta>` | ⚙️ script (the response comes from 🤖 `claude -p` in Option 1) |
 | 6 | Real demos timed to the speech | `python3 ferramentas/stopmotion.py <quadros> <spec> <palavras> <dur> <capa> <cta> <saida>` | ⚙️ script |
 | 7 | Animated components timed to the speech | `node ferramentas/gravar-pagina.cjs <pagina> <roteiro.json> <saida>` | ⚙️ script |
 | 8 | Videos timed to the speech | `python3 ferramentas/filme.py filmes/opcaoN spec.json <palavras> <dur>` + `npx hyperframes@0.8.77 check` + `render` | ⚙️ script |
 | 9 | Combine the avatar (half screen → corner), voice, and soundtrack | `python3 ferramentas/compor.py <visual> <avatar> <t_meia> dir\|esq <saida>` | ⚙️ script |
 | 10 | Independent review of the guide and videos | new reviewer using the runbook | 🤖 reviewer |
-| 11 | Guide on Pages, portal, topic in INEMA.VIBE, and videos on lives3 (1 hour between them) | `git push`, `atualiza-portal`, `postar-telegram`, yt-pub-x3 queue | 🧠 session with Nei |
+| 11 | Guide on Pages, portal, topic in ARCKHÉ.VIBE, and videos on lives3 (1 hour between them) | `git push`, `atualiza-portal`, `postar-telegram`, yt-pub-x3 queue | 🧠 session with Nei |
 
 ### Known limitations
 
@@ -100,4 +100,4 @@ Connect to the real Telegram:
 
 ## License
 
-MIT. Free on [inema.club](https://inema.club), directly on the internet.
+MIT. Free on [ARCKHÉ AI](https://ARCKHÉ AI), directly on the internet.

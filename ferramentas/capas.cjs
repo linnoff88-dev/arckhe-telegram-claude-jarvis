@@ -18,7 +18,7 @@ body{width:1920px;height:1080px;background:#facc15;font-family:Sora,sans-serif;c
 #a{top:250px}#b{top:375px}#c{top:500px}
 #s{position:absolute;left:114px;top:670px;width:780px;font-family:Inter,sans-serif;font-size:38px;font-weight:600;color:#3a2f06;line-height:1.3}
 #m{position:absolute;left:114px;top:930px;font-weight:800;font-size:30px;letter-spacing:.08em;color:#3a2f06}
-</style></head><body><p class="l" id="a">${c.l[0]}</p><p class="l" id="b">${c.l[1]}</p><p class="l" id="c">${c.l[2]}</p><p id="s">${c.sub}</p><p id="m">INEMA.CLUB</p></body></html>`;
+</style></head><body><p class="l" id="a">${c.l[0]}</p><p class="l" id="b">${c.l[1]}</p><p class="l" id="c">${c.l[2]}</p><p id="s">${c.sub}</p><p id="m">ARCKHÉ AI</p></body></html>`;
 (async () => {
   const out = path.resolve(process.argv[2]); fs.mkdirSync(out, { recursive: true });
   const b = await pw.chromium.launch(); const p = await b.newPage({ viewport: { width: 1920, height: 1080 } });
